@@ -64,6 +64,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="dateLabel" destination="xpM-cM-eBE" id="0mL-mn-krY"/>
+                <outlet property="faveButton" destination="2M3-Ly-Jao" id="YsY-x2-UtK"/>
                 <outlet property="titleLabel" destination="PHG-Eh-eN8" id="vCQ-4R-Z54"/>
             </connections>
             <point key="canvasLocation" x="140.57971014492756" y="127.90178571428571"/>

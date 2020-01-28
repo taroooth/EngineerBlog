@@ -1,23 +1,23 @@
 //
-//  CustomCell.swift
+//  CustomCell2.swift
 //  TechBlog
 //
-//  Created by 岡田龍太朗 on 2019/12/21.
-//  Copyright © 2019 岡田龍太朗. All rights reserved.
+//  Created by 岡田龍太朗 on 2020/01/27.
+//  Copyright © 2020 岡田龍太朗. All rights reserved.
 //
 
 import UIKit
 import FaveButton
 
-protocol CellDelegate: AnyObject {
-    func didTapButton(cell: CustomCell)
-    func didUnTapButton(cell: CustomCell)
+protocol CellDelegate2: AnyObject {
+    func didTapButton2(cell: CustomCell2)
+    func didUnTapButton2(cell: CustomCell2)
 }
 
-class CustomCell: UITableViewCell, FaveButtonDelegate {
+class CustomCell2: UITableViewCell, FaveButtonDelegate {
     
-    weak var delegate: CellDelegate?
-    
+    weak var delegate: CellDelegate2?
+
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
     }
     func color(_ rgbColor: Int) -> UIColor{
@@ -28,35 +28,32 @@ class CustomCell: UITableViewCell, FaveButtonDelegate {
             alpha: CGFloat(1.0)
         )
     }
-//        frame: CGRect(x:200, y:200, width: 44, height: 44),
-//        faveIconNormal: UIImage(named: "heart.png")
-//    )
-    @IBOutlet weak var faveButton: FaveButton!
+
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBAction func didButtonTapped(_ sender: FaveButton) {
-        sender.switchAction(onAction: {
-            self.delegate?.didTapButton(cell: self)
+    @IBOutlet weak var faveButton: FaveButton!
+    @IBAction func faveButtonTapped(_ sender: FaveButton) {
+        sender.switchAction2(onAction: {
+            self.delegate?.didTapButton2(cell: self)
         },offAction: {
-            self.delegate?.didUnTapButton(cell: self)
+            self.delegate?.didUnTapButton2(cell: self)
         })
     }
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
     }
-    
+
 }
 
 extension FaveButton {
 
-    func switchAction(onAction: @escaping ()->Void, offAction: @escaping ()->Void) {
+    func switchAction2(onAction: @escaping ()->Void, offAction: @escaping ()->Void) {
         //選択状態を反転
 //        self.isSelected = !self.isSelected
         switch self.isSelected {

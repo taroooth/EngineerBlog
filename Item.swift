@@ -13,4 +13,3 @@ class Item {
     var link = ""
     var pubDate: Date!
     }
-
