@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import FaveButton
-
+//お気に入り一覧ページ
 class FaveListViewController: UITableViewController, CellDelegate2 {
     
     var favorites = [Favorite]()
@@ -70,7 +70,6 @@ class FaveListViewController: UITableViewController, CellDelegate2 {
         let faveRef = db.collection("fave")
         faveRef.getDocuments() { (querySnapshot, err) in
             if let err = err {
-                // エラー時の処理
                 print("Error getting documents: \(err)")
                 return
             } else {
@@ -113,7 +112,7 @@ class FaveListViewController: UITableViewController, CellDelegate2 {
     }
     
     func didTapButton2(cell: CustomCell2) {
-        print("ON")
+        
     let tapTime = Date()
     print(tapTime)
     let indexPath = tableView.indexPath(for: cell)?.row
@@ -124,7 +123,6 @@ class FaveListViewController: UITableViewController, CellDelegate2 {
         "tapTime": tapTime
         ]
     
-    // Add a new document in collection "cities"
     db.collection("fave").document("\(favorites[indexPath!].title)").setData(docData) { err in
         if let err = err {
             print("Error writing document: \(err)")
@@ -135,8 +133,7 @@ class FaveListViewController: UITableViewController, CellDelegate2 {
     }
     
     func didUnTapButton2(cell: CustomCell2) {
-        print("OFF")
-
+        
         let indexPath = tableView.indexPath(for: cell)?.row
         db.collection("fave").document("\(favorites[indexPath!].title)").delete() { err in
             if let err = err {

@@ -45,6 +45,20 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
     ]
     
     override func viewDidLoad() {
+//        let hundle = Auth.auth().addStateDidChangeListener { (auth, user) in
+//        }
+        Auth.auth().signInAnonymously() { (authResult, error) in
+            guard let user = authResult?.user else { return }
+            let isAnonymous = user.isAnonymous  // true
+            let uid = user.uid
+            print(isAnonymous)
+            print(uid)
+            
+            if error != nil {
+                print("失敗")
+                return
+            }
+        }
         getUrlDocument()
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
         self.tableView.estimatedRowHeight = 90
@@ -59,12 +73,26 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
 //        bannerView.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+//        Auth.auth().removeStateDidChangeListener(hundle!)
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
+            if items[indexPath.row].selected == true {
+                cell.faveButton.setSelected(selected: true, animated: false)
+            }else {
+                cell.faveButton.setSelected(selected: false, animated: false)
+            }
+            
         cell.titleLabel?.text = items[indexPath.row].title
         let tempDate = items[indexPath.row].pubDate!
             formatter.locale = Locale(identifier: "ja_JP")
@@ -90,7 +118,7 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
 //    func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -138,7 +166,6 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
             } else {
                 self.urls = []
                 for document in querySnapshot!.documents {
-//                    print("\(document.documentID) => \(document.data())")
                     let data = document.data()["url"] as! String
                     self.urls.append(URL(string: data))
                     }
@@ -150,8 +177,8 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
     
     func didTapButton(cell: CustomCell) {
         let tapTime = Date()
-        print(tapTime)
         let indexPath = tableView.indexPath(for: cell)?.row
+        items[indexPath!].selected = true
         let docData: [String: Any] = [
             "title": items[indexPath!].title,
             "date": items[indexPath!].pubDate!,
@@ -171,6 +198,7 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
     
     func didUnTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
+        items[indexPath!].selected = false
         db.collection("fave").document("\(items[indexPath!].title)").delete() { err in
             if let err = err {
                 print("Error removing document: \(err)")
@@ -219,36 +247,3 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

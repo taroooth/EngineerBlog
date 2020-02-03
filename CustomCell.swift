@@ -8,15 +8,16 @@
 
 import UIKit
 import FaveButton
-
+//→ListViewController.swift
 protocol CellDelegate: AnyObject {
     func didTapButton(cell: CustomCell)
     func didUnTapButton(cell: CustomCell)
 }
-
+//記事一覧ページのCustomCell
 class CustomCell: UITableViewCell, FaveButtonDelegate {
     
     weak var delegate: CellDelegate?
+    var items = [Item]()
     
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
     }
@@ -28,9 +29,7 @@ class CustomCell: UITableViewCell, FaveButtonDelegate {
             alpha: CGFloat(1.0)
         )
     }
-//        frame: CGRect(x:200, y:200, width: 44, height: 44),
-//        faveIconNormal: UIImage(named: "heart.png")
-//    )
+
     @IBOutlet weak var faveButton: FaveButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -44,27 +43,30 @@ class CustomCell: UITableViewCell, FaveButtonDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
     }
+    
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//              self.faveButton.isSelected = false
+//              self.faveButton.isHighlighted = false
+//              // This seems some CustomButton property
+////              self.bookButton.isTouchInside = false
+//    }
     
 }
 
 extension FaveButton {
-
+//ボタンのON/OFFで処理を変える
     func switchAction(onAction: @escaping ()->Void, offAction: @escaping ()->Void) {
-        //選択状態を反転
-//        self.isSelected = !self.isSelected
+       
         switch self.isSelected {
         case true:
-            //ONにする時に走らせたい処理
             onAction()
         case false:
-            //OFFにする時に走らせたい処理
             offAction()
         }
 

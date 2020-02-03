@@ -8,7 +8,7 @@
 
 import UIKit
 import FaveButton
-
+//→FaveListViewController.swift
 protocol CellDelegate2: AnyObject {
     func didTapButton2(cell: CustomCell2)
     func didUnTapButton2(cell: CustomCell2)
@@ -52,16 +52,13 @@ class CustomCell2: UITableViewCell, FaveButtonDelegate {
 }
 
 extension FaveButton {
-
+//ボタンのON/OFFで処理を変える
     func switchAction2(onAction: @escaping ()->Void, offAction: @escaping ()->Void) {
-        //選択状態を反転
-//        self.isSelected = !self.isSelected
+        
         switch self.isSelected {
         case true:
-            //ONにする時に走らせたい処理
             onAction()
         case false:
-            //OFFにする時に走らせたい処理
             offAction()
         }
 

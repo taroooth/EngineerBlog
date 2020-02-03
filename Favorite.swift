@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+//お気に入りした記事のデータ
 class Favorite{
     var title = ""
     var link = ""

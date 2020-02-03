@@ -7,9 +7,10 @@
 //
 
 import Foundation
-
+//取得した記事のじデータ
 class Item {
     var title = ""
     var link = ""
     var pubDate: Date!
+    var selected: Bool!
     }
