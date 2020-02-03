@@ -51,9 +51,6 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
             guard let user = authResult?.user else { return }
             let isAnonymous = user.isAnonymous  // true
             let uid = user.uid
-            print(isAnonymous)
-            print(uid)
-            
             if error != nil {
                 print("失敗")
                 return
