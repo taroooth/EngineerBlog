@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import Firebase
 //import GoogleMobileAds
 import FaveButton
-import Firebase
 
 class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegate
 //    GADBannerViewDelegate
@@ -24,39 +24,35 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
     let db = Firestore.firestore()
     //    var bannerView: GADBannerView!
 
-    var urls = [URL(string: "")
-//        URL(string: "https://www.ryukke.com/?feed=rss2"),
-//        URL(string: "https://manablog.org/category/programming/feed/"),
-//        URL(string: "https://cohki0305.com/category/be_programmer/feed"),
-//        URL(string: "https://techlife.cookpad.com/rss"),
-//        URL(string: "https://developer.hatenastaff.com/rss"),
-//        URL(string: "https://moneyforward.com/engineers_blog/feed/"),
-//        URL(string: "https://techblog.zozo.com/rss"),
-//        URL(string: "https://tech.mercari.com/rss"),
-//        URL(string: "https://developer.smartnews.com/blog/feed"),
-//        URL(string: "https://medium.com/feed/eureka-engineering"),
-//        URL(string: "https://tech.gunosy.io/rss"),
-//        URL(string: "https://tech.uzabase.com/rss"),
-//        URL(string: "https://www.lifull.blog/rss"),
-//        URL(string: "https://developers.cyberagent.co.jp/blog/feed/"),
-//        URL(string: "https://engineering.linecorp.com/ja/feed/"),
-//        URL(string: "https://medium.com/feed/mixi-developers"),
-//        URL(string: "https://techblog.yahoo.co.jp/index.xml")
+    var urls = [
+        URL(string: "https://www.ryukke.com/?feed=rss2"),
+        URL(string: "https://manablog.org/category/programming/feed/"),
+        URL(string: "https://cohki0305.com/category/be_programmer/feed"),
+        URL(string: "https://techlife.cookpad.com/rss"),
+        URL(string: "https://developer.hatenastaff.com/rss"),
+        URL(string: "https://moneyforward.com/engineers_blog/feed/"),
+        URL(string: "https://techblog.zozo.com/rss"),
+        URL(string: "https://tech.mercari.com/rss"),
+        URL(string: "https://developer.smartnews.com/blog/feed"),
+        URL(string: "https://medium.com/feed/eureka-engineering"),
+        URL(string: "https://tech.gunosy.io/rss"),
+        URL(string: "https://tech.uzabase.com/rss"),
+        URL(string: "https://www.lifull.blog/rss"),
+        URL(string: "https://developers.cyberagent.co.jp/blog/feed/"),
+        URL(string: "https://engineering.linecorp.com/ja/feed/"),
+        URL(string: "https://medium.com/feed/mixi-developers"),
+        URL(string: "https://techblog.yahoo.co.jp/index.xml")
     ]
     
     override func viewDidLoad() {
-//        let hundle = Auth.auth().addStateDidChangeListener { (auth, user) in
-//        }
+        startDownload()
         Auth.auth().signInAnonymously() { (authResult, error) in
             guard let user = authResult?.user else { return }
             let isAnonymous = user.isAnonymous  // true
             let uid = user.uid
-            if error != nil {
-                print("失敗")
-                return
-            }
+            print(isAnonymous)
+            print(uid)
         }
-        getUrlDocument()
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
         self.tableView.estimatedRowHeight = 90
 //                テーブルの高さを自動で調節
@@ -74,16 +70,14 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
         self.tableView.reloadData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-//        Auth.auth().removeStateDidChangeListener(hundle!)
-    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
+            
             if items[indexPath.row].selected == true {
                 cell.faveButton.setSelected(selected: true, animated: false)
             }else {
@@ -118,29 +112,9 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
         return 1
     }
     
-//    func addBannerViewToView(_ bannerView: GADBannerView) {
-//     bannerView.translatesAutoresizingMaskIntoConstraints = false
-//     view.addSubview(bannerView)
-//     view.addConstraints(
-//       [NSLayoutConstraint(item: bannerView,
-//                           attribute: .bottom,
-//                           relatedBy: .equal,
-//                           toItem: view.safeAreaLayoutGuide,
-//                           attribute: .bottom,
-//                           multiplier: 1,
-//                           constant: 0),
-//        NSLayoutConstraint(item: bannerView,
-//                           attribute: .centerX,
-//                           relatedBy: .equal,
-//                           toItem: view,
-//                           attribute: .centerX,
-//                           multiplier: 1,
-//                           constant: 0)
-//       ])
-//    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return items.count
+//        return items.chunked(by: 21).count
+        return items.count
     }
 
     func startDownload() {
@@ -156,22 +130,6 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
         }
     }
     
-    private func getUrlDocument() {
-        db.collection("urls").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                self.urls = []
-                for document in querySnapshot!.documents {
-                    let data = document.data()["url"] as! String
-                    self.urls.append(URL(string: data))
-                    }
-                self.startDownload()
-            }
-        }
-    }
-    
-    
     func didTapButton(cell: CustomCell) {
         let tapTime = Date()
         let indexPath = tableView.indexPath(for: cell)?.row
@@ -180,10 +138,10 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
             "title": items[indexPath!].title,
             "date": items[indexPath!].pubDate!,
             "link": items[indexPath!].link,
-            "tapTime": tapTime
+            "tapTime": tapTime,
+            "selected": items[indexPath!].selected!
         ]
         
-        // Add a new document in collection "cities"
         db.collection("fave").document("\(items[indexPath!].title)").setData(docData) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -241,6 +199,35 @@ class ListViewController1: UITableViewController, XMLParserDelegate, CellDelegat
             let controller = segue.destination as! DetailViewController
             controller.title = item.title
             controller.link = item.link
+        }
+    }
+    
+    //    func addBannerViewToView(_ bannerView: GADBannerView) {
+    //     bannerView.translatesAutoresizingMaskIntoConstraints = false
+    //     view.addSubview(bannerView)
+    //     view.addConstraints(
+    //       [NSLayoutConstraint(item: bannerView,
+    //                           attribute: .bottom,
+    //                           relatedBy: .equal,
+    //                           toItem: view.safeAreaLayoutGuide,
+    //                           attribute: .bottom,
+    //                           multiplier: 1,
+    //                           constant: 0),
+    //        NSLayoutConstraint(item: bannerView,
+    //                           attribute: .centerX,
+    //                           relatedBy: .equal,
+    //                           toItem: view,
+    //                           attribute: .centerX,
+    //                           multiplier: 1,
+    //                           constant: 0)
+    //       ])
+    //    }
+}
+
+extension Array {
+    func chunked(by chunkSize: Int) -> [[Element]] {
+        return stride(from: 0, to: self.count, by: chunkSize).map {
+            Array(self[$0..<Swift.min($0 + chunkSize, self.count)])
         }
     }
 }

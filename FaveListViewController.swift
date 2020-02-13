@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Firebase
 import FaveButton
+import Firebase
 //お気に入り一覧ページ
 class FaveListViewController: UITableViewController, CellDelegate2 {
     

@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import Firebase
 
-class SettingTableViewController: UITableViewController {
+class SettingTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
 
-    var settingTitles = ["会員登録"]
+    var settingTitles = ["プロフィール", "会員登録", "ログアウト"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+    
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -32,7 +37,32 @@ class SettingTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "nextLoginViewController", sender: nil)
+        switch indexPath.row {
+        case 0:
+            if (Auth.auth().currentUser != nil) {
+                performSegue(withIdentifier: "nextProfileTableViewController", sender: nil)
+            }
+            
+        case 1:
+            performSegue(withIdentifier: "nextLoginViewController", sender: nil)
+            
+        case 2:
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
+            let signOutVC: SignOutModalViewController = storyBoard.instantiateViewController(withIdentifier: "SignOutModalViewController") as! SignOutModalViewController
+            signOutVC.modalPresentationStyle = .overFullScreen
+            signOutVC.modalTransitionStyle = .crossDissolve
+
+            self.present(signOutVC, animated: false, completion: nil)
+            
+        default:
+            print("SettingTableViewController no segue")
+        }
+    }
+    
+    // iPhoneで表示させる場合に必要
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
     /*
     // Override to support conditional editing of the table view.

@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 //        GADMobileAds.sharedInstance().start(completionHandler: nil)
-        TWTRTwitter.sharedInstance().start(withConsumerKey:"", consumerSecret:"")
+        TWTRTwitter.sharedInstance().start(withConsumerKey:"0byswh0uNVRuT0PdyI6ke36ng", consumerSecret:"uHfkPPYl1GVZoa6ESYseLZRrZM8TAD2AV2Ez3mNaX4JPlcx7kj")
         return true
     }
 
