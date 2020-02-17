@@ -3221,7 +3221,7 @@ static int ssl_check_clienthello_tlsext(SSL_HANDSHAKE *hs) {
   SSL *const ssl = hs->ssl;
 
   if (ssl->token_binding_negotiated &&
-      !(GRPC_SHADOW_SSL_get_secure_renegotiation_support(ssl) &&
+      !(SSL_get_secure_renegotiation_support(ssl) &&
         SSL_get_extms_support(ssl))) {
     OPENSSL_PUT_ERROR(SSL, SSL_R_NEGOTIATED_TB_WITHOUT_EMS_OR_RI);
     ssl_send_alert(ssl, SSL3_AL_FATAL, SSL_AD_UNSUPPORTED_EXTENSION);

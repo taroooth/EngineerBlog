@@ -4322,10 +4322,6 @@ struct ssl_session_st {
 #define SSL_CTRL_SET_TMP_RSA doesnt_exist
 #define SSL_CTRL_SET_TMP_RSA_CB doesnt_exist
 
-#define SSL_CTX_set_tlsext_servername_callback \
-    SSL_CTX_set_tlsext_servername_callback
-#define SSL_get_secure_renegotiation_support \
-    SSL_get_secure_renegotiation_support
 
 
 #if defined(__cplusplus)

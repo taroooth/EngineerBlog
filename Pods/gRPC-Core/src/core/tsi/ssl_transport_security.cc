@@ -1894,7 +1894,7 @@ tsi_result tsi_create_ssl_server_handshaker_factory_with_options(
           &impl->ssl_context_x509_subject_names[i]);
       if (result != TSI_OK) break;
 
-        GRPC_SHADOW_SSL_CTX_set_tlsext_servername_callback(
+      SSL_CTX_set_tlsext_servername_callback(
           impl->ssl_contexts[i],
           ssl_server_handshaker_factory_servername_callback);
       SSL_CTX_set_tlsext_servername_arg(impl->ssl_contexts[i], impl);
