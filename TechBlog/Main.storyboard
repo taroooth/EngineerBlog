@@ -70,7 +70,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kVo-Q7-H3t">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="1" green="0.91902438049298718" blue="0.41473766827548408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomCell" id="6WP-KI-XSn" customClass="CustomCell" customModule="EnginnerBlog" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
@@ -93,7 +93,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kpb-zc-uSj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4228" y="7"/>
+            <point key="canvasLocation" x="4227.536231884058" y="6.6964285714285712"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="7az-fN-Hp9">
@@ -369,6 +369,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="rx5-JE-v2b"/>
-        <segue reference="hdy-j2-2ZY"/>
+        <segue reference="ylE-4m-BkB"/>
     </inferredMetricsTieBreakers>
 </document>
