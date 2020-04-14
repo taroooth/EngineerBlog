@@ -13,6 +13,4 @@ target 'TechBlog' do
   pod 'Firebase/Core', :modular_headers => true
   pod 'Firebase/Firestore', :modular_headers => true
   pod 'Firebase/Auth', :modular_headers => true
-  pod 'Alamofire'
-  pod 'Kanna'
 end
