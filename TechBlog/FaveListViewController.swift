@@ -14,18 +14,13 @@ class FaveListViewController: UITableViewController, CellDelegate {
     
     var favorites = [Favorite]()
     var favorite:Favorite?
-    var items = [Item]()
-    var item:Item?
     let faveButton = FaveButton()
-    var currentString = ""
-    let formatter = DateFormatter()
     let db = Firestore.firestore()
-    
+    var last: DocumentSnapshot? = nil
     
     override func viewDidLoad() {
         loadData()
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
-//        self.tableView.estimatedRowHeight = 90
         //cellの境界線
         tableView.separatorStyle = .none
     }
@@ -42,23 +37,17 @@ class FaveListViewController: UITableViewController, CellDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
            if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
             cell.faveButton.setSelected(selected: true, animated: false)
-//            if favorites[indexPath.row].selected == true {
-//            cell.faveButton.setSelected(selected: true, animated: false)
-//            }else if favorites[indexPath.row].selected == false {
-//                cell.faveButton.setSelected(selected: false, animated: false)
-//            }
-            
-               cell.titleLabel?.text = favorites[indexPath.row].title
-               cell.dateLabel?.text = favorites[indexPath.row].feedTitle
-               //ラベルの表示行数を無制限にする
-               cell.titleLabel?.numberOfLines = 0
-               cell.delegate = self
-               cell.selectionStyle = .none
+            cell.titleLabel?.text = favorites[indexPath.row].title
+            cell.feedTitleLabel?.text = favorites[indexPath.row].feedTitle
+            //ラベルの表示行数を無制限にする
+            cell.titleLabel?.numberOfLines = 0
+            cell.feedTitleLabel?.numberOfLines = 0
+            cell.delegate = self
+            cell.selectionStyle = .none
                return cell
-                   }
-
-               return UITableViewCell()
-           }
+                }
+            return UITableViewCell()
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -72,8 +61,19 @@ class FaveListViewController: UITableViewController, CellDelegate {
         performSegue(withIdentifier: "faveNext", sender: favorites[indexPath.row].link)
     }
     
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
+                                           willDecelerate decelerate: Bool) {
+        let currentOffsetY = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
+        let distanceToBottom = maximumOffset - currentOffsetY
+        
+        if distanceToBottom < 500 {
+            reLoadData()
+        }
+    }
+    
     func loadData() {
-        db.collection("articles").whereField("selected", isEqualTo: true).getDocuments() { (querySnapshot, err) in
+        db.collection("articles").whereField("selected", isEqualTo: true).order(by: "tapTime", descending: true).limit(to: 20).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -95,12 +95,38 @@ class FaveListViewController: UITableViewController, CellDelegate {
                 self.favorite?.docID = docID
                 self.favorites.append(self.favorite!)
                 }
-//                self.favorites.sort(by: { (a, b) -> Bool in
-//                return a.tapTime > b.tapTime
-//                })
                 self.tableView.reloadData()
+                self.last = querySnapshot?.documents.last
             }
+        }
+    }
+    
+    func reLoadData() {
+        guard let lastSnapshot = last else {return}
+        db.collection("articles").whereField("selected", isEqualTo: true).order(by: "tapTime", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+            for document in querySnapshot!.documents {
+                self.favorite = Favorite()
+                let title = document.data()["title"] as! String
+                let feedTitle = document.data()["feedTitle"] as! String
+                let link = document.data()["link"] as! String
+                let timestamp: Timestamp = document.data()["tapTime"] as! Timestamp
+                let dateValue = timestamp.dateValue()
+                let docID = "\(document.documentID)"
+
+                self.favorite?.title = title
+                self.favorite?.feedTitle = feedTitle
+                self.favorite?.link = link
+                self.favorite?.tapTime = dateValue
+                self.favorite?.docID = docID
+                self.favorites.append(self.favorite!)
+                }
+                self.tableView.reloadData()
+                self.last = querySnapshot?.documents.last
             }
+        }
     }
     
     func didTapButton(cell: CustomCell) {

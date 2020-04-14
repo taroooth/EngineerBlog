@@ -32,7 +32,7 @@ class CustomCell: UITableViewCell, FaveButtonDelegate {
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var faveButton: FaveButton!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var feedTitleLabel: UILabel!
     @IBOutlet weak var thumbnailImage: UIImageView!
     @IBAction func didButtonTapped(_ sender: FaveButton) {
         sender.switchAction(onAction: {

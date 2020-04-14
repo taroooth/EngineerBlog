@@ -39,13 +39,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHG-Eh-eN8">
-                                <rect key="frame" x="8" y="8" width="284" height="56"/>
+                                <rect key="frame" x="8" y="8" width="284" height="55.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="feedTitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Gs-65-6Ea">
-                                <rect key="frame" x="8" y="80" width="50" height="14.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="feedTitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Gs-65-6Ea" userLabel="Feed Title Label">
+                                <rect key="frame" x="8" y="79.5" width="246" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -59,6 +59,7 @@
                             <constraint firstItem="8Gs-65-6Ea" firstAttribute="leading" secondItem="48k-rn-R4M" secondAttribute="leading" constant="8" id="Ohf-Oj-m7q"/>
                             <constraint firstItem="8Gs-65-6Ea" firstAttribute="centerY" secondItem="2M3-Ly-Jao" secondAttribute="centerY" id="RlT-rp-ZDn"/>
                             <constraint firstAttribute="bottom" secondItem="2M3-Ly-Jao" secondAttribute="bottom" constant="8" id="mRz-hC-8G0"/>
+                            <constraint firstItem="2M3-Ly-Jao" firstAttribute="leading" secondItem="8Gs-65-6Ea" secondAttribute="trailing" constant="8" id="qO8-Fu-7ml"/>
                             <constraint firstItem="PHG-Eh-eN8" firstAttribute="top" secondItem="48k-rn-R4M" secondAttribute="top" constant="8" id="r2K-Z7-Fmw"/>
                             <constraint firstAttribute="trailing" secondItem="PHG-Eh-eN8" secondAttribute="trailing" constant="8" id="z3O-AH-i7I"/>
                         </constraints>
@@ -74,8 +75,8 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="backView" destination="48k-rn-R4M" id="riO-tb-rY8"/>
-                <outlet property="dateLabel" destination="8Gs-65-6Ea" id="nrI-x4-3MN"/>
                 <outlet property="faveButton" destination="2M3-Ly-Jao" id="k1l-DR-H6g"/>
+                <outlet property="feedTitleLabel" destination="8Gs-65-6Ea" id="fdR-wI-99I"/>
                 <outlet property="titleLabel" destination="PHG-Eh-eN8" id="p58-oo-seU"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="150.66964285714286"/>

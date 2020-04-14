@@ -14,10 +14,8 @@ class ListViewController: UITableViewController, CellDelegate {
     var faveButton: FaveButton?
     var items = [Item]()
     var item:Item?
-    var favorites = [Favorite]()
-    var favorite:Favorite?
-    let formatter = DateFormatter()
     let db = Firestore.firestore()
+    var last: DocumentSnapshot? = nil
     
     override func viewDidLoad() {
         startDownload()
@@ -52,15 +50,11 @@ class ListViewController: UITableViewController, CellDelegate {
             }
             
             cell.titleLabel?.text = items[indexPath.row].title
-            cell.dateLabel?.text = items[indexPath.row].feedTitle
-//                let tempDate = items[indexPath.row].pubDate!
-//                    formatter.locale = Locale(identifier: "ja_JP")
-//                    formatter.dateFormat = "MM月dd日(E)"
-//                let outputDate = formatter.string(from: tempDate)
-//                    cell.dateLabel?.text = outputDate
+            cell.feedTitleLabel?.text = items[indexPath.row].feedTitle
             
         //ラベルの表示行数を無制限にする
         cell.titleLabel?.numberOfLines = 0
+        cell.feedTitleLabel?.numberOfLines = 0
         cell.delegate = self
         cell.selectionStyle = .none
             if cell.isSelected == true {
@@ -85,9 +79,19 @@ class ListViewController: UITableViewController, CellDelegate {
         return items.count
     }
     
-    //.order(by: "date", descending: true).limit(to: 20).
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
+                                           willDecelerate decelerate: Bool) {
+        let currentOffsetY = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
+        let distanceToBottom = maximumOffset - currentOffsetY
+        
+        if distanceToBottom < 500 {
+            reStartDownload()
+        }
+    }
+    
     func startDownload() {
-        db.collection("articles").getDocuments() { (querySnapshot, err) in
+        db.collection("articles").order(by: "date", descending: true).limit(to: 20).getDocuments() { (querySnapshot, err) in
         if let err = err {
             print("Error getting documents: \(err)")
         } else {
@@ -108,8 +112,36 @@ class ListViewController: UITableViewController, CellDelegate {
                 self.items.append(self.item!)
                     }
             self.tableView.reloadData()
+            self.last = querySnapshot?.documents.last
                 }
             }
+    }
+    
+    func reStartDownload() {
+        guard let lastSnapshot = last else {return}
+        db.collection("articles").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
+        if let err = err {
+            print("Error getting documents: \(err)")
+        } else {
+            for document in querySnapshot!.documents {
+                self.item = Item()
+                let title = document.data()["title"] as! String
+                let link = document.data()["link"] as! String
+                let feedTitle = document.data()["feedTitle"] as! String
+                let selected = document.data()["selected"] as! Bool
+                let docID = "\(document.documentID)"
+                
+                self.item?.title = title
+                self.item?.link = link
+                self.item?.selected = selected
+                self.item?.docID = docID
+                self.item?.feedTitle = feedTitle
+                self.items.append(self.item!)
+                    }
+            self.tableView.reloadData()
+            self.last = querySnapshot?.documents.last
+            }
+        }
     }
     
     func didTapButton(cell: CustomCell) {
@@ -143,13 +175,6 @@ class ListViewController: UITableViewController, CellDelegate {
             }
     }
         
-//    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-//        formatter.locale = Locale(identifier: "en_US_POSIX")
-//        formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZZZ"
-//        items.sort(by: { (a, b) -> Bool in
-//            return a.pubDate > b.pubDate
-//        })
-//    }
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = self.tableView.indexPathForSelectedRow {
             let controller = segue.destination as! DetailViewController
