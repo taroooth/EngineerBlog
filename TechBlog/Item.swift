@@ -14,4 +14,5 @@ class Item {
     var pubDate: Date!
     var selected: Bool!
     var docID = ""
+    var feedTitle = ""
     }

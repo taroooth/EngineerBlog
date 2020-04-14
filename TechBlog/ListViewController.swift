@@ -5,15 +5,13 @@
 //  Created by 岡田龍太朗 on 2019/09/14.
 //  Copyright © 2019 岡田龍太朗. All rights reserved.
 //
-
 import UIKit
 import Firebase
 import FaveButton
 
-class ListViewController: UITableViewController, XMLParserDelegate, CellDelegate {
+class ListViewController: UITableViewController, CellDelegate {
     
     var faveButton: FaveButton?
-    var parser:XMLParser!
     var items = [Item]()
     var item:Item?
     var favorites = [Favorite]()
@@ -31,13 +29,13 @@ class ListViewController: UITableViewController, XMLParserDelegate, CellDelegate
             print(uid)
         }
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
-        tableView.rowHeight = 130
         //cellの境界線
         tableView.separatorStyle = .none
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
+        startDownload()
     }
     
     
@@ -47,13 +45,14 @@ class ListViewController: UITableViewController, XMLParserDelegate, CellDelegate
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
+            if self.items[indexPath.row].selected == true {
+                cell.faveButton.setSelected(selected: true, animated: false)
+            }else {
+                cell.faveButton.setSelected(selected: false, animated: false)
+            }
+            
             cell.titleLabel?.text = items[indexPath.row].title
-//                if items[indexPath.row].selected == true {
-//                    cell.faveButton.setSelected(selected: true, animated: false)
-//                }else {
-//                    cell.faveButton.setSelected(selected: false, animated: false)
-//                }
-
+            cell.dateLabel?.text = items[indexPath.row].feedTitle
 //                let tempDate = items[indexPath.row].pubDate!
 //                    formatter.locale = Locale(identifier: "ja_JP")
 //                    formatter.dateFormat = "MM月dd日(E)"
@@ -92,19 +91,22 @@ class ListViewController: UITableViewController, XMLParserDelegate, CellDelegate
         if let err = err {
             print("Error getting documents: \(err)")
         } else {
+            self.items = []
             for document in querySnapshot!.documents {
                 self.item = Item()
-
                 let title = document.data()["title"] as! String
                 let link = document.data()["link"] as! String
+                let feedTitle = document.data()["feedTitle"] as! String
+                let selected = document.data()["selected"] as! Bool
                 let docID = "\(document.documentID)"
                 
                 self.item?.title = title
                 self.item?.link = link
+                self.item?.selected = selected
                 self.item?.docID = docID
+                self.item?.feedTitle = feedTitle
                 self.items.append(self.item!)
                     }
-
             self.tableView.reloadData()
                 }
             }
@@ -113,51 +115,41 @@ class ListViewController: UITableViewController, XMLParserDelegate, CellDelegate
     func didTapButton(cell: CustomCell) {
         let tapTime = Date()
         let indexPath = tableView.indexPath(for: cell)?.row
-        let docData: [String: Any] = [
-            "title": items[indexPath!].title,
-            "link": items[indexPath!].link,
-            "tapTime": tapTime,
-        ]
-        if let user = Auth.auth().currentUser {
-            db.collection("users").document("\(user.uid)").collection("fave").document("\(items[indexPath!].title)").setData(docData) { err in
+        db.collection("articles").document("\(items[indexPath!].docID)").updateData([
+            "selected": true,
+            "tapTime": tapTime
+            
+        ]) { err in
             if let err = err {
-                print("Error writing document: \(err)")
+                print("Error updating document: \(err)")
             } else {
-                print("Document successfully written!")
+                self.items[indexPath!].selected = true
+                print("Document successfully updated selected = true")
             }
-        }
-//            db.collection("articles").updateData([
-//                "capital": true
-//            ]) { err in
-//                if let err = err {
-//                    print("Error updating document: \(err)")
-//                } else {
-//                    print("Document successfully updated")
-//                }
-//            }
         }
     }
     
     func didUnTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
-        if let user = Auth.auth().currentUser {
-            db.collection("users").document("\(user.uid)").collection("fave").document("\(items[indexPath!].title)").delete() { err in
+            db.collection("articles").document("\(items[indexPath!].docID)").updateData([
+                "selected": false
+            ]) { err in
                 if let err = err {
-                print("Error removing document: \(err)")
-            } else {
-                print("Document successfully removed!")
+                    print("Error updating document: \(err)")
+                } else {
+                    self.items[indexPath!].selected = false
+                    print("Document successfully updated selected = false")
+                }
             }
-        }
-        }
     }
         
-    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZZZ"
-        items.sort(by: { (a, b) -> Bool in
-            return a.pubDate > b.pubDate
-        })
-    }
+//    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+//        formatter.locale = Locale(identifier: "en_US_POSIX")
+//        formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZZZ"
+//        items.sort(by: { (a, b) -> Bool in
+//            return a.pubDate > b.pubDate
+//        })
+//    }
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = self.tableView.indexPathForSelectedRow {
             let controller = segue.destination as! DetailViewController

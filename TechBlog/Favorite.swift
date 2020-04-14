@@ -12,5 +12,8 @@ class Favorite{
     var title = ""
     var link = ""
     var date = ""
+    var selected: Bool!
     var tapTime: Date!
+    var docID = ""
+    var feedTitle = ""
 }

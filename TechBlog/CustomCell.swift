@@ -17,7 +17,6 @@ protocol CellDelegate: AnyObject {
 class CustomCell: UITableViewCell, FaveButtonDelegate {
     
     weak var delegate: CellDelegate?
-    var items = [Item]()
     
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
     }
