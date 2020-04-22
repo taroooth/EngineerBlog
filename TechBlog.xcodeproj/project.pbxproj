@@ -30,6 +30,7 @@
 		42CF317623CB1E0A00F856B2 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CF317523CB1E0A00F856B2 /* Favorite.swift */; };
 		42E4A5D0232C5B58009C2B00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E4A5CF232C5B58009C2B00 /* AppDelegate.swift */; };
 		42E4A5E9232C6246009C2B00 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E4A5E8232C6246009C2B00 /* DetailViewController.swift */; };
+		B399F0400261B3FDB68ABCAD /* Pods_TechBlog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3EC05930DCDEC4694F75F30 /* Pods_TechBlog.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -278,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42A5ECFF24176BD600D0556E /* WebKit.framework in Frameworks */,
+				B399F0400261B3FDB68ABCAD /* Pods_TechBlog.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,7 +867,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_HEADERS_RUN_UNIFDEF = NO;
-				CURRENT_PROJECT_VERSION = 1.0.1;
+				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_TEAM = AJ4LF65N26;
 				INFOPLIST_FILE = "$(SRCROOT)/TechBlog/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -894,7 +896,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_HEADERS_RUN_UNIFDEF = NO;
-				CURRENT_PROJECT_VERSION = 1.0.1;
+				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_TEAM = AJ4LF65N26;
 				INFOPLIST_FILE = "$(SRCROOT)/TechBlog/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
