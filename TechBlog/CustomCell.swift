@@ -62,14 +62,6 @@ class CustomCell: UITableViewCell, FaveButtonDelegate {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//              self.faveButton.isSelected = false
-//              self.faveButton.isHighlighted = false
-//              // This seems some CustomButton property
-////              self.bookButton.isTouchInside = false
-//    }
 }
 
 extension FaveButton {

@@ -25,6 +25,7 @@
 		42A5ECD82417667900D0556E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06CF189E23F69FB1003DA8A4 /* Assets.xcassets */; };
 		42A5ECFC24176B7F00D0556E /* FirebaseCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42CD143E23F60556000AE29F /* FirebaseCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		42A5ECFF24176BD600D0556E /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E4A5E6232C6206009C2B00 /* WebKit.framework */; };
+		42AC76172456085D00D5F95A /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AC76162456085C00D5F95A /* ListPresenter.swift */; };
 		42CD13F423EF833F000AE29F /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD13F323EF833F000AE29F /* ProfileTableViewController.swift */; };
 		42CD13F623F0F3BF000AE29F /* SignOutModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD13F523F0F3BF000AE29F /* SignOutModalViewController.swift */; };
 		42CF317623CB1E0A00F856B2 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CF317523CB1E0A00F856B2 /* Favorite.swift */; };
@@ -238,6 +239,7 @@
 		42A351F523E2040F003941A9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		42A351F723E20AFD003941A9 /* CreatUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatUsersViewController.swift; sourceTree = "<group>"; };
 		42A5ECA523FB242A00D0556E /* ButtonTwitterNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonTwitterNormal.png; sourceTree = "<group>"; };
+		42AC76162456085C00D5F95A /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		42CD13F323EF833F000AE29F /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		42CD13F523F0F3BF000AE29F /* SignOutModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutModalViewController.swift; sourceTree = "<group>"; };
 		42CD141723F60556000AE29F /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
@@ -275,6 +277,45 @@
 				42837C09241ADE970047FA59 /* SwifterTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		42AC75F4245602EC00D5F95A /* Main List */ = {
+			isa = PBXGroup;
+			children = (
+				42A351F123E0868A003941A9 /* MainViewController.swift */,
+				426F5C9A238D6D10009FEE19 /* Item.swift */,
+				42317B382445A96900BDD214 /* ListViewController.swift */,
+				42AC76162456085C00D5F95A /* ListPresenter.swift */,
+			);
+			path = "Main List";
+			sourceTree = "<group>";
+		};
+		42AC76122456030400D5F95A /* Favo List */ = {
+			isa = PBXGroup;
+			children = (
+				422A77EA23BDFD3D005F9DD3 /* FaveListViewController.swift */,
+				42CF317523CB1E0A00F856B2 /* Favorite.swift */,
+			);
+			path = "Favo List";
+			sourceTree = "<group>";
+		};
+		42AC76132456033A00D5F95A /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				42CD13F323EF833F000AE29F /* ProfileTableViewController.swift */,
+				42A351F523E2040F003941A9 /* SettingTableViewController.swift */,
+				42A351F723E20AFD003941A9 /* CreatUsersViewController.swift */,
+				42CD13F523F0F3BF000AE29F /* SignOutModalViewController.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		42AC7614245605AE00D5F95A /* Detail Web */ = {
+			isa = PBXGroup;
+			children = (
+				42E4A5E8232C6246009C2B00 /* DetailViewController.swift */,
+			);
+			path = "Detail Web";
 			sourceTree = "<group>";
 		};
 		42CD141823F60556000AE29F /* Products */ = {
@@ -327,27 +368,21 @@
 			isa = PBXGroup;
 			children = (
 				06CF189E23F69FB1003DA8A4 /* Assets.xcassets */,
-				42A351F123E0868A003941A9 /* MainViewController.swift */,
-				427873F423F9DD970021D029 /* Config.xcconfig */,
-				422A77EA23BDFD3D005F9DD3 /* FaveListViewController.swift */,
-				42317B382445A96900BDD214 /* ListViewController.swift */,
-				42A351F523E2040F003941A9 /* SettingTableViewController.swift */,
-				42CD13F323EF833F000AE29F /* ProfileTableViewController.swift */,
-				42A351F723E20AFD003941A9 /* CreatUsersViewController.swift */,
-				42CD13F523F0F3BF000AE29F /* SignOutModalViewController.swift */,
-				42CF317523CB1E0A00F856B2 /* Favorite.swift */,
-				426F5C9A238D6D10009FEE19 /* Item.swift */,
 				42E4A5CF232C5B58009C2B00 /* AppDelegate.swift */,
-				42E4A5E8232C6246009C2B00 /* DetailViewController.swift */,
+				42AC75F4245602EC00D5F95A /* Main List */,
+				42AC76122456030400D5F95A /* Favo List */,
+				42AC76132456033A00D5F95A /* Setting */,
+				42AC7614245605AE00D5F95A /* Detail Web */,
 				426F5CAF23AD8D18009FEE19 /* CustomCell.swift */,
-				42837C0E241AE26C0047FA59 /* EngineerBlog-Bridging-Header.h */,
 				426F5CB023AD8D18009FEE19 /* CustomCell.xib */,
 				42837BF6241AD56A0047FA59 /* Main.storyboard */,
-				42837CF724312EDC0047FA59 /* GoogleService-Info.plist */,
-				06CF18D923F79272003DA8A4 /* Default-568h@2x.png */,
-				42E4A5DB232C5B5D009C2B00 /* Info.plist */,
-				42837BF4241AD5560047FA59 /* heart.png */,
+				42837C0E241AE26C0047FA59 /* EngineerBlog-Bridging-Header.h */,
 				42A5ECA523FB242A00D0556E /* ButtonTwitterNormal.png */,
+				42837BF4241AD5560047FA59 /* heart.png */,
+				42E4A5DB232C5B5D009C2B00 /* Info.plist */,
+				06CF18D923F79272003DA8A4 /* Default-568h@2x.png */,
+				42837CF724312EDC0047FA59 /* GoogleService-Info.plist */,
+				427873F423F9DD970021D029 /* Config.xcconfig */,
 			);
 			path = TechBlog;
 			sourceTree = "<group>";
@@ -688,6 +723,7 @@
 				42CD13F423EF833F000AE29F /* ProfileTableViewController.swift in Sources */,
 				42A351F223E0868A003941A9 /* MainViewController.swift in Sources */,
 				42E4A5E9232C6246009C2B00 /* DetailViewController.swift in Sources */,
+				42AC76172456085D00D5F95A /* ListPresenter.swift in Sources */,
 				42317B392445A96900BDD214 /* ListViewController.swift in Sources */,
 				42A351F823E20AFD003941A9 /* CreatUsersViewController.swift in Sources */,
 			);
