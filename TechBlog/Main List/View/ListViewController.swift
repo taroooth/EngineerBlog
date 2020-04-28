@@ -11,7 +11,7 @@ import FaveButton
 
 protocol ListViewProtocol: class {
     func reloadItems(items: [Item])
-    func reloadData()
+//    func reloadData()
 }
 
 class ListViewController: UITableViewController, CellDelegate, ListViewProtocol {
@@ -19,11 +19,9 @@ class ListViewController: UITableViewController, CellDelegate, ListViewProtocol 
     var faveButton: FaveButton?
     var items = [Item]()
     var item:Item?
-    lazy var presenter: ListPresenter = ListPresenterImpl(view: self)
-    lazy var listPresenterImpl = ListPresenterImpl(view: self)
+    var presenter: ListPresenter?
     let db = Firestore.firestore()
     var last: DocumentSnapshot? = nil
-
 }
 
 extension ListViewController {
@@ -37,7 +35,8 @@ extension ListViewController {
             print(isAnonymous)
             print(uid)
         }
-        self.presenter.startDownload()
+        self.presenter?.startDownload()
+        reloadItems(items: self.items)
             tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
             //cellの境界線
             tableView.separatorStyle = .none
@@ -45,19 +44,19 @@ extension ListViewController {
         
     func reloadItems(items: [Item]) {
         self.items = items
+        tableView.reloadData()
+        print("reloadItems OK")
+    }
+    
+    func reloadData() {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.presenter.startDownload()
+        self.presenter?.startDownload()
     }
-        
         
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    }
-        
-    func reloadData() {
-        tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -84,8 +83,8 @@ extension ListViewController {
         return UITableViewCell()
     }
 
-        //CustomCellからのsegue設定
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //CustomCellからのsegue設定
         performSegue(withIdentifier: "next", sender: items[indexPath.row].link)
     }
         
@@ -104,19 +103,19 @@ extension ListViewController {
         let distanceToBottom = maximumOffset - currentOffsetY
             
         if distanceToBottom < 500 {
-            self.presenter.reStartDownload()
+            self.presenter?.reStartDownload()
         }
     }
         
     func didTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
-        self.presenter.favo("\(items[indexPath!].docID)")
-        self.items[indexPath!].selected = false
+        self.presenter?.favo("\(items[indexPath!].docID)")
+        self.items[indexPath!].selected = true
     }
         
     func didUnTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
-        self.presenter.unFavo("\(items[indexPath!].docID)")
+        self.presenter?.unFavo("\(items[indexPath!].docID)")
         self.items[indexPath!].selected = false
     }
             
