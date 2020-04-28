@@ -9,18 +9,22 @@ import UIKit
 import Firebase
 import FaveButton
 
-class ListViewController: UITableViewController, CellDelegate {
+protocol ListViewProtocol: class {
+    func reloadItems(items: [Item])
+}
+
+class ListViewController: UITableViewController, CellDelegate, ListViewProtocol {
 
     var faveButton: FaveButton?
     var items = [Item]()
     var item:Item?
-    var presenter: ListPresenter = ListPresenterImpl()
+    lazy var presenter: ListPresenter = ListPresenterImpl(view: self)
     let db = Firestore.firestore()
     var last: DocumentSnapshot? = nil
-
 }
 
 extension ListViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Auth.auth().signInAnonymously() { (authResult, error) in
@@ -31,164 +35,136 @@ extension ListViewController {
             print(uid)
         }
         self.presenter.startDownload()
-
-
-    //        startDownload()
-            
             tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
             //cellの境界線
             tableView.separatorStyle = .none
         }
         
-        override func viewWillAppear(_ animated: Bool) {
-            self.tableView.reloadData()
-            self.presenter.startDownload()
-        }
+    func reloadItems(items: [Item]) {
+        self.items = items
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
         
         
-        override func viewDidAppear(_ animated: Bool) {
-            super.viewDidAppear(animated)
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
         
-        override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
-                if self.items[indexPath.row].selected == true {
-                    cell.faveButton.setSelected(selected: true, animated: false)
-                }else {
-                    cell.faveButton.setSelected(selected: false, animated: false)
-                }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
+            if self.items[indexPath.row].selected == true {
+                cell.faveButton.setSelected(selected: true, animated: false)
+            }else {
+                cell.faveButton.setSelected(selected: false, animated: false)
+            }
                 
-                cell.titleLabel?.text = items[indexPath.row].title
-                cell.feedTitleLabel?.text = items[indexPath.row].feedTitle
+            cell.titleLabel?.text = items[indexPath.row].title
+            cell.feedTitleLabel?.text = items[indexPath.row].feedTitle
                 
             //ラベルの表示行数を無制限にする
             cell.titleLabel?.numberOfLines = 0
             cell.feedTitleLabel?.numberOfLines = 0
             cell.delegate = self
             cell.selectionStyle = .none
-                if cell.isSelected == true {
-                    cell.backView.backgroundColor = UIColor.blue
-                }
+            if cell.isSelected == true {
+                cell.backView.backgroundColor = UIColor.blue
+            }
 
             return cell
             }
-            return UITableViewCell()
-        }
+        return UITableViewCell()
+    }
 
         //CustomCellからのsegue設定
-        override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            performSegue(withIdentifier: "next", sender: items[indexPath.row].link)
-        }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "next", sender: items[indexPath.row].link)
+    }
         
-        override func numberOfSections(in tableView: UITableView) -> Int {
-            return 1
-        }
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
         
-        override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return items.count
-        }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
         
-        override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
                                                willDecelerate decelerate: Bool) {
-            let currentOffsetY = scrollView.contentOffset.y
-            let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
-            let distanceToBottom = maximumOffset - currentOffsetY
+        let currentOffsetY = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
+        let distanceToBottom = maximumOffset - currentOffsetY
             
-            if distanceToBottom < 500 {
-                reStartDownload()
-            }
+        if distanceToBottom < 500 {
+            reStartDownload()
         }
+    }
         
-    //    func startDownload() {
-    //        db.collection("articles").order(by: "date", descending: true).limit(to: 20).getDocuments() { (querySnapshot, err) in
-    //        if let err = err {
-    //            print("Error getting documents: \(err)")
-    //        } else {
-    //            self.items = []
-    //            for document in querySnapshot!.documents {
-    //                self.item = Item()
-    //                let title = document.data()["title"] as! String
-    //                let link = document.data()["link"] as! String
-    //                let feedTitle = document.data()["feedTitle"] as! String
-    //                let selected = document.data()["selected"] as! Bool
-    //                let docID = "\(document.documentID)"
-    //
-    //                self.item?.title = title
-    //                self.item?.link = link
-    //                self.item?.selected = selected
-    //                self.item?.docID = docID
-    //                self.item?.feedTitle = feedTitle
-    //                self.items.append(self.item!)
-    //                    }
-    //            self.tableView.reloadData()
-    //            self.last = querySnapshot?.documents.last
-    //                }
-    //            }
-    //    }
-        
-        func reStartDownload() {
-            guard let lastSnapshot = last else {return}
-            db.collection("articles").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    self.item = Item()
-                    let title = document.data()["title"] as! String
-                    let link = document.data()["link"] as! String
-                    let feedTitle = document.data()["feedTitle"] as! String
-                    let selected = document.data()["selected"] as! Bool
-                    let docID = "\(document.documentID)"
+    func reStartDownload() {
+        guard let lastSnapshot = last else {return}
+        db.collection("articles").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
+        if let err = err {
+            print("Error getting documents: \(err)")
+        } else {
+            for document in querySnapshot!.documents {
+                self.item = Item()
+                let title = document.data()["title"] as! String
+                let link = document.data()["link"] as! String
+                let feedTitle = document.data()["feedTitle"] as! String
+                let selected = document.data()["selected"] as! Bool
+                let docID = "\(document.documentID)"
                     
-                    self.item?.title = title
-                    self.item?.link = link
-                    self.item?.selected = selected
-                    self.item?.docID = docID
-                    self.item?.feedTitle = feedTitle
-                    self.items.append(self.item!)
-                        }
-                self.tableView.reloadData()
-                self.last = querySnapshot?.documents.last
-                }
+                self.item?.title = title
+                self.item?.link = link
+                self.item?.selected = selected
+                self.item?.docID = docID
+                self.item?.feedTitle = feedTitle
+                self.items.append(self.item!)
+                    }
+            self.tableView.reloadData()
+            self.last = querySnapshot?.documents.last
             }
         }
+    }
         
-        func didTapButton(cell: CustomCell) {
-            let tapTime = Date()
-            let indexPath = tableView.indexPath(for: cell)?.row
+    func didTapButton(cell: CustomCell) {
+        let tapTime = Date()
+        let indexPath = tableView.indexPath(for: cell)?.row
+        db.collection("articles").document("\(items[indexPath!].docID)").updateData([
+            "selected": true,
+            "tapTime": tapTime
+            
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                self.items[indexPath!].selected = true
+                print("Document successfully updated selected = true")
+            }
+        }
+    }
+        
+    func didUnTapButton(cell: CustomCell) {
+        let indexPath = tableView.indexPath(for: cell)?.row
             db.collection("articles").document("\(items[indexPath!].docID)").updateData([
-                "selected": true,
-                "tapTime": tapTime
-                
+                "selected": false
             ]) { err in
                 if let err = err {
                     print("Error updating document: \(err)")
                 } else {
-                    self.items[indexPath!].selected = true
-                    print("Document successfully updated selected = true")
+                    self.items[indexPath!].selected = false
+                    print("Document successfully updated selected = false")
                 }
             }
-        }
-        
-        func didUnTapButton(cell: CustomCell) {
-            let indexPath = tableView.indexPath(for: cell)?.row
-                db.collection("articles").document("\(items[indexPath!].docID)").updateData([
-                    "selected": false
-                ]) { err in
-                    if let err = err {
-                        print("Error updating document: \(err)")
-                    } else {
-                        self.items[indexPath!].selected = false
-                        print("Document successfully updated selected = false")
-                    }
-                }
-        }
+    }
             
-         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                let controller = segue.destination as! DetailViewController
-                controller.title = items[indexPath.row].title
-                controller.link = items[indexPath.row].link
-            }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let indexPath = self.tableView.indexPathForSelectedRow {
+            let controller = segue.destination as! DetailViewController
+            controller.title = items[indexPath.row].title
+            controller.link = items[indexPath.row].link
         }
+    }
 }

@@ -9,15 +9,22 @@
 import Foundation
 import Firebase
 
-protocol ListPresenter {
+protocol ListPresenter: class {
+    init(view: ListViewProtocol)
     func startDownload()
 }
+
 final class ListPresenterImpl: ListPresenter {
-    
+
     let db = Firestore.firestore()
     var items = [Item]()
     var item:Item?
     var last: DocumentSnapshot? = nil
+    weak var view: ListViewProtocol!
+    
+    required init(view: ListViewProtocol) {
+        self.view = view
+    }
 
     func startDownload() {
         db.collection("articles").order(by: "date", descending: true).limit(to: 20).getDocuments() { (querySnapshot, err) in
@@ -39,8 +46,8 @@ final class ListPresenterImpl: ListPresenter {
                 self.item?.docID = docID
                 self.item?.feedTitle = feedTitle
                 self.items.append(self.item!)
+                self.view.reloadItems(items: self.items)
                     }
-            print(self.items.count)
             self.last = querySnapshot?.documents.last
                 }
             }
