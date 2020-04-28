@@ -17,7 +17,6 @@
 		42837BF7241AD56A0047FA59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42837BF6241AD56A0047FA59 /* Main.storyboard */; };
 		42837C0A241ADEB80047FA59 /* SwifteriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42837C01241ADE970047FA59 /* SwifteriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		42837C0B241ADEC00047FA59 /* Pods_TechBlog.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42CD145A23F60556000AE29F /* Pods_TechBlog.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		42837D1824312EDC0047FA59 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42837CF724312EDC0047FA59 /* GoogleService-Info.plist */; };
 		42A351F223E0868A003941A9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A351F123E0868A003941A9 /* MainViewController.swift */; };
 		42A351F623E2040F003941A9 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A351F523E2040F003941A9 /* SettingTableViewController.swift */; };
 		42A351F823E20AFD003941A9 /* CreatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A351F723E20AFD003941A9 /* CreatUsersViewController.swift */; };
@@ -26,6 +25,7 @@
 		42A5ECFC24176B7F00D0556E /* FirebaseCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42CD143E23F60556000AE29F /* FirebaseCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		42A5ECFF24176BD600D0556E /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E4A5E6232C6206009C2B00 /* WebKit.framework */; };
 		42AC76172456085D00D5F95A /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AC76162456085C00D5F95A /* ListPresenter.swift */; };
+		42AC763A2457D0A700D5F95A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AC76392457D0A700D5F95A /* GoogleService-Info.plist */; };
 		42CD13F423EF833F000AE29F /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD13F323EF833F000AE29F /* ProfileTableViewController.swift */; };
 		42CD13F623F0F3BF000AE29F /* SignOutModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD13F523F0F3BF000AE29F /* SignOutModalViewController.swift */; };
 		42CF317623CB1E0A00F856B2 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CF317523CB1E0A00F856B2 /* Favorite.swift */; };
@@ -234,12 +234,12 @@
 		42837BF6241AD56A0047FA59 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		42837BF8241ADE970047FA59 /* Swifter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Swifter.xcodeproj; path = "../../../Downloads/Swifter-master/Swifter.xcodeproj"; sourceTree = "<group>"; };
 		42837C0E241AE26C0047FA59 /* EngineerBlog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EngineerBlog-Bridging-Header.h"; sourceTree = "<group>"; };
-		42837CF724312EDC0047FA59 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42A351F123E0868A003941A9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		42A351F523E2040F003941A9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		42A351F723E20AFD003941A9 /* CreatUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatUsersViewController.swift; sourceTree = "<group>"; };
 		42A5ECA523FB242A00D0556E /* ButtonTwitterNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonTwitterNormal.png; sourceTree = "<group>"; };
 		42AC76162456085C00D5F95A /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
+		42AC76392457D0A700D5F95A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42CD13F323EF833F000AE29F /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		42CD13F523F0F3BF000AE29F /* SignOutModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutModalViewController.swift; sourceTree = "<group>"; };
 		42CD141723F60556000AE29F /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
@@ -381,7 +381,7 @@
 				42837BF4241AD5560047FA59 /* heart.png */,
 				42E4A5DB232C5B5D009C2B00 /* Info.plist */,
 				06CF18D923F79272003DA8A4 /* Default-568h@2x.png */,
-				42837CF724312EDC0047FA59 /* GoogleService-Info.plist */,
+				42AC76392457D0A700D5F95A /* GoogleService-Info.plist */,
 				427873F423F9DD970021D029 /* Config.xcconfig */,
 			);
 			path = TechBlog;
@@ -655,12 +655,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				42A5ECD82417667900D0556E /* Assets.xcassets in Resources */,
-				42837D1824312EDC0047FA59 /* GoogleService-Info.plist in Resources */,
 				42837BF5241AD5560047FA59 /* heart.png in Resources */,
 				06CF18DA23F79273003DA8A4 /* Default-568h@2x.png in Resources */,
 				42A5ECA623FB242A00D0556E /* ButtonTwitterNormal.png in Resources */,
 				42837BF7241AD56A0047FA59 /* Main.storyboard in Resources */,
 				426F5CB223AD8D18009FEE19 /* CustomCell.xib in Resources */,
+				42AC763A2457D0A700D5F95A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
