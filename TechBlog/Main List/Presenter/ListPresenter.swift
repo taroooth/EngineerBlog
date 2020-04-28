@@ -13,10 +13,11 @@ protocol ListPresenter: class {
     init(view: ListViewProtocol)
     func startDownload()
     func reStartDownload()
+    func favo(_ documentID: String)
+    func unFavo(_ documentID: String)
 }
 
 final class ListPresenterImpl: ListPresenter {
-
     
     let db = Firestore.firestore()
     var items = [Item]()
@@ -82,5 +83,18 @@ final class ListPresenterImpl: ListPresenter {
             self.last = querySnapshot?.documents.last
             }
         }
+    }
+    
+    func favo(_ documentID: String) {
+        db.collection("articles").document(documentID).updateData([
+            "selected": true,
+            "tapTime": Date()
+        ])
+    }
+    
+    func unFavo(_ documentID: String) {
+        db.collection("articles").document(documentID).updateData([
+            "selected": false
+        ])
     }
 }

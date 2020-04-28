@@ -23,6 +23,7 @@ class ListViewController: UITableViewController, CellDelegate, ListViewProtocol 
     lazy var listPresenterImpl = ListPresenterImpl(view: self)
     let db = Firestore.firestore()
     var last: DocumentSnapshot? = nil
+
 }
 
 extension ListViewController {
@@ -48,7 +49,6 @@ extension ListViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.presenter.startDownload()
-        self.tableView.reloadData()
     }
         
         
@@ -79,9 +79,8 @@ extension ListViewController {
             if cell.isSelected == true {
                 cell.backView.backgroundColor = UIColor.blue
             }
-
             return cell
-            }
+        }
         return UITableViewCell()
     }
 
@@ -103,72 +102,22 @@ extension ListViewController {
         let currentOffsetY = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
         let distanceToBottom = maximumOffset - currentOffsetY
-        
-        print("Y:\(currentOffsetY)")
-        print("max:\(maximumOffset)")
-        print("D.B:\(distanceToBottom)")
             
         if distanceToBottom < 500 {
             self.presenter.reStartDownload()
         }
     }
         
-//    func reStartDownload() {
-//        guard let lastSnapshot = last else {return}
-//        db.collection("articles").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
-//        if let err = err {
-//            print("Error getting documents: \(err)")
-//        } else {
-//            for document in querySnapshot!.documents {
-//                self.item = Item()
-//                let title = document.data()["title"] as! String
-//                let link = document.data()["link"] as! String
-//                let feedTitle = document.data()["feedTitle"] as! String
-//                let selected = document.data()["selected"] as! Bool
-//                let docID = "\(document.documentID)"
-//
-//                self.item?.title = title
-//                self.item?.link = link
-//                self.item?.selected = selected
-//                self.item?.docID = docID
-//                self.item?.feedTitle = feedTitle
-//                self.items.append(self.item!)
-//                    }
-//            self.tableView.reloadData()
-//            self.last = querySnapshot?.documents.last
-//            }
-//        }
-//    }
-        
     func didTapButton(cell: CustomCell) {
-        let tapTime = Date()
         let indexPath = tableView.indexPath(for: cell)?.row
-        db.collection("articles").document("\(items[indexPath!].docID)").updateData([
-            "selected": true,
-            "tapTime": tapTime
-            
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                self.items[indexPath!].selected = true
-                print("Document successfully updated selected = true")
-            }
-        }
+        self.presenter.favo("\(items[indexPath!].docID)")
+        self.items[indexPath!].selected = false
     }
         
     func didUnTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
-            db.collection("articles").document("\(items[indexPath!].docID)").updateData([
-                "selected": false
-            ]) { err in
-                if let err = err {
-                    print("Error updating document: \(err)")
-                } else {
-                    self.items[indexPath!].selected = false
-                    print("Document successfully updated selected = false")
-                }
-            }
+        self.presenter.unFavo("\(items[indexPath!].docID)")
+        self.items[indexPath!].selected = false
     }
             
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
