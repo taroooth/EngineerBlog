@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		06CF18DA23F79273003DA8A4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06CF18D923F79272003DA8A4 /* Default-568h@2x.png */; };
-		422A77EB23BDFD3E005F9DD3 /* FaveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A77EA23BDFD3D005F9DD3 /* FaveListViewController.swift */; };
+		422A77EB23BDFD3E005F9DD3 /* FavoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A77EA23BDFD3D005F9DD3 /* FavoListViewController.swift */; };
 		42317B392445A96900BDD214 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42317B382445A96900BDD214 /* ListViewController.swift */; };
 		426F5C9B238D6D10009FEE19 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F5C9A238D6D10009FEE19 /* Item.swift */; };
 		426F5CB123AD8D18009FEE19 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F5CAF23AD8D18009FEE19 /* CustomCell.swift */; };
@@ -26,6 +26,7 @@
 		42A5ECFF24176BD600D0556E /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E4A5E6232C6206009C2B00 /* WebKit.framework */; };
 		42AC76172456085D00D5F95A /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AC76162456085C00D5F95A /* ListPresenter.swift */; };
 		42AC763A2457D0A700D5F95A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AC76392457D0A700D5F95A /* GoogleService-Info.plist */; };
+		42AC76412457FE6C00D5F95A /* FavoListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AC76402457FE6C00D5F95A /* FavoListPresenter.swift */; };
 		42CD13F423EF833F000AE29F /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD13F323EF833F000AE29F /* ProfileTableViewController.swift */; };
 		42CD13F623F0F3BF000AE29F /* SignOutModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD13F523F0F3BF000AE29F /* SignOutModalViewController.swift */; };
 		42CF317623CB1E0A00F856B2 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CF317523CB1E0A00F856B2 /* Favorite.swift */; };
@@ -224,7 +225,7 @@
 /* Begin PBXFileReference section */
 		06CF189E23F69FB1003DA8A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		06CF18D923F79272003DA8A4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		422A77EA23BDFD3D005F9DD3 /* FaveListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaveListViewController.swift; sourceTree = "<group>"; };
+		422A77EA23BDFD3D005F9DD3 /* FavoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoListViewController.swift; sourceTree = "<group>"; };
 		42317B382445A96900BDD214 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		426F5C9A238D6D10009FEE19 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		426F5CAF23AD8D18009FEE19 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -240,6 +241,7 @@
 		42A5ECA523FB242A00D0556E /* ButtonTwitterNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonTwitterNormal.png; sourceTree = "<group>"; };
 		42AC76162456085C00D5F95A /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		42AC76392457D0A700D5F95A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		42AC76402457FE6C00D5F95A /* FavoListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoListPresenter.swift; sourceTree = "<group>"; };
 		42CD13F323EF833F000AE29F /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		42CD13F523F0F3BF000AE29F /* SignOutModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutModalViewController.swift; sourceTree = "<group>"; };
 		42CD141723F60556000AE29F /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
@@ -282,10 +284,9 @@
 		42AC75F4245602EC00D5F95A /* Main List */ = {
 			isa = PBXGroup;
 			children = (
-				42A351F123E0868A003941A9 /* MainViewController.swift */,
-				426F5C9A238D6D10009FEE19 /* Item.swift */,
-				42317B382445A96900BDD214 /* ListViewController.swift */,
-				42AC76162456085C00D5F95A /* ListPresenter.swift */,
+				42AC763B2457FBF200D5F95A /* View */,
+				42AC763C2457FC0A00D5F95A /* Presenter */,
+				42AC763D2457FC1D00D5F95A /* Model */,
 			);
 			path = "Main List";
 			sourceTree = "<group>";
@@ -293,8 +294,9 @@
 		42AC76122456030400D5F95A /* Favo List */ = {
 			isa = PBXGroup;
 			children = (
-				422A77EA23BDFD3D005F9DD3 /* FaveListViewController.swift */,
+				422A77EA23BDFD3D005F9DD3 /* FavoListViewController.swift */,
 				42CF317523CB1E0A00F856B2 /* Favorite.swift */,
+				42AC76402457FE6C00D5F95A /* FavoListPresenter.swift */,
 			);
 			path = "Favo List";
 			sourceTree = "<group>";
@@ -316,6 +318,31 @@
 				42E4A5E8232C6246009C2B00 /* DetailViewController.swift */,
 			);
 			path = "Detail Web";
+			sourceTree = "<group>";
+		};
+		42AC763B2457FBF200D5F95A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				42317B382445A96900BDD214 /* ListViewController.swift */,
+				42A351F123E0868A003941A9 /* MainViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		42AC763C2457FC0A00D5F95A /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				42AC76162456085C00D5F95A /* ListPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		42AC763D2457FC1D00D5F95A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				426F5C9A238D6D10009FEE19 /* Item.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		42CD141823F60556000AE29F /* Products */ = {
@@ -717,9 +744,10 @@
 				42E4A5D0232C5B58009C2B00 /* AppDelegate.swift in Sources */,
 				426F5C9B238D6D10009FEE19 /* Item.swift in Sources */,
 				426F5CB123AD8D18009FEE19 /* CustomCell.swift in Sources */,
+				42AC76412457FE6C00D5F95A /* FavoListPresenter.swift in Sources */,
 				42A351F623E2040F003941A9 /* SettingTableViewController.swift in Sources */,
 				42CF317623CB1E0A00F856B2 /* Favorite.swift in Sources */,
-				422A77EB23BDFD3E005F9DD3 /* FaveListViewController.swift in Sources */,
+				422A77EB23BDFD3E005F9DD3 /* FavoListViewController.swift in Sources */,
 				42CD13F423EF833F000AE29F /* ProfileTableViewController.swift in Sources */,
 				42A351F223E0868A003941A9 /* MainViewController.swift in Sources */,
 				42E4A5E9232C6246009C2B00 /* DetailViewController.swift in Sources */,

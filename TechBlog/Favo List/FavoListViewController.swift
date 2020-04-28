@@ -10,7 +10,7 @@ import UIKit
 import FaveButton
 import Firebase
 //お気に入り一覧ページ
-class FaveListViewController: UITableViewController, CellDelegate {
+class FavoListViewController: UITableViewController, CellDelegate {
     
     var favorites = [Favorite]()
     var favorite:Favorite?

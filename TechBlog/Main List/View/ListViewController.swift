@@ -11,6 +11,7 @@ import FaveButton
 
 protocol ListViewProtocol: class {
     func reloadItems(items: [Item])
+    func reloadData()
 }
 
 class ListViewController: UITableViewController, CellDelegate, ListViewProtocol {
@@ -19,6 +20,7 @@ class ListViewController: UITableViewController, CellDelegate, ListViewProtocol 
     var items = [Item]()
     var item:Item?
     lazy var presenter: ListPresenter = ListPresenterImpl(view: self)
+    lazy var listPresenterImpl = ListPresenterImpl(view: self)
     let db = Firestore.firestore()
     var last: DocumentSnapshot? = nil
 }
@@ -45,6 +47,7 @@ extension ListViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.presenter.startDownload()
         self.tableView.reloadData()
     }
         
@@ -53,6 +56,10 @@ extension ListViewController {
         super.viewDidAppear(animated)
     }
         
+    func reloadData() {
+        tableView.reloadData()
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
             if self.items[indexPath.row].selected == true {
@@ -96,38 +103,42 @@ extension ListViewController {
         let currentOffsetY = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
         let distanceToBottom = maximumOffset - currentOffsetY
+        
+        print("Y:\(currentOffsetY)")
+        print("max:\(maximumOffset)")
+        print("D.B:\(distanceToBottom)")
             
         if distanceToBottom < 500 {
-            reStartDownload()
+            self.presenter.reStartDownload()
         }
     }
         
-    func reStartDownload() {
-        guard let lastSnapshot = last else {return}
-        db.collection("articles").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
-        if let err = err {
-            print("Error getting documents: \(err)")
-        } else {
-            for document in querySnapshot!.documents {
-                self.item = Item()
-                let title = document.data()["title"] as! String
-                let link = document.data()["link"] as! String
-                let feedTitle = document.data()["feedTitle"] as! String
-                let selected = document.data()["selected"] as! Bool
-                let docID = "\(document.documentID)"
-                    
-                self.item?.title = title
-                self.item?.link = link
-                self.item?.selected = selected
-                self.item?.docID = docID
-                self.item?.feedTitle = feedTitle
-                self.items.append(self.item!)
-                    }
-            self.tableView.reloadData()
-            self.last = querySnapshot?.documents.last
-            }
-        }
-    }
+//    func reStartDownload() {
+//        guard let lastSnapshot = last else {return}
+//        db.collection("articles").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
+//        if let err = err {
+//            print("Error getting documents: \(err)")
+//        } else {
+//            for document in querySnapshot!.documents {
+//                self.item = Item()
+//                let title = document.data()["title"] as! String
+//                let link = document.data()["link"] as! String
+//                let feedTitle = document.data()["feedTitle"] as! String
+//                let selected = document.data()["selected"] as! Bool
+//                let docID = "\(document.documentID)"
+//
+//                self.item?.title = title
+//                self.item?.link = link
+//                self.item?.selected = selected
+//                self.item?.docID = docID
+//                self.item?.feedTitle = feedTitle
+//                self.items.append(self.item!)
+//                    }
+//            self.tableView.reloadData()
+//            self.last = querySnapshot?.documents.last
+//            }
+//        }
+//    }
         
     func didTapButton(cell: CustomCell) {
         let tapTime = Date()

@@ -12,15 +12,17 @@ import Firebase
 protocol ListPresenter: class {
     init(view: ListViewProtocol)
     func startDownload()
+    func reStartDownload()
 }
 
 final class ListPresenterImpl: ListPresenter {
 
+    
     let db = Firestore.firestore()
     var items = [Item]()
     var item:Item?
     var last: DocumentSnapshot? = nil
-    weak var view: ListViewProtocol!
+    weak var view: ListViewProtocol?
     
     required init(view: ListViewProtocol) {
         self.view = view
@@ -46,10 +48,39 @@ final class ListPresenterImpl: ListPresenter {
                 self.item?.docID = docID
                 self.item?.feedTitle = feedTitle
                 self.items.append(self.item!)
-                self.view.reloadItems(items: self.items)
+                self.view?.reloadItems(items: self.items)
                     }
+            self.view?.reloadData()
             self.last = querySnapshot?.documents.last
                 }
             }
+    }
+    
+    func reStartDownload() {
+        guard let lastSnapshot = last else {return}
+        db.collection("articles").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
+        if let err = err {
+            print("Error getting documents: \(err)")
+        } else {
+            for document in querySnapshot!.documents {
+                self.item = Item()
+                let title = document.data()["title"] as! String
+                let link = document.data()["link"] as! String
+                let feedTitle = document.data()["feedTitle"] as! String
+                let selected = document.data()["selected"] as! Bool
+                let docID = "\(document.documentID)"
+                    
+                self.item?.title = title
+                self.item?.link = link
+                self.item?.selected = selected
+                self.item?.docID = docID
+                self.item?.feedTitle = feedTitle
+                self.items.append(self.item!)
+                self.view?.reloadItems(items: self.items)
+                    }
+            self.view?.reloadData()
+            self.last = querySnapshot?.documents.last
+            }
+        }
     }
 }
