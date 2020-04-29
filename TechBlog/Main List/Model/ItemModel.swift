@@ -9,9 +9,11 @@
 import Foundation
 import Firebase
 
-protocol ItemModelDelegate: class {
-    func getDocuments()
+protocol ItemDelegate: class {
+    func presentItems(items: [Item])
+    func rePresentItems(items: [Item])
 }
+
 //取得した記事のデータ
 class Item {
     var title = ""
@@ -28,23 +30,20 @@ class ItemModel {
     var items = [Item]()
     var item: Item?
     var last: DocumentSnapshot? = nil
-    weak var presenter: ListPresenter?
+    var presenter: ListPresenter?
+    weak var delegate: ItemDelegate?
     
     init() {
         self.db = Firestore.firestore()
     }
     
     func getDocuments() {
-        print("getDocuments success①")
         db.collection("articles").order(by: "date", descending: true).limit(to: 20).getDocuments() { (querySnapshot, err) in
         if let err = err {
             print("Error getting documents: \(err)")
         } else {
-            print("getDocuments success②")
-
             self.items = []
             for document in querySnapshot!.documents {
-                print("getDocuments success③")
                 self.item = Item()
                 self.item?.title = document.data()["title"] as! String
                 self.item?.link = document.data()["link"] as! String
@@ -52,11 +51,36 @@ class ItemModel {
                 self.item?.selected = document.data()["selected"] as? Bool
                 self.item?.docID = "\(document.documentID)"
                 self.items.append(self.item!)
-                print(String(describing: self.item?.title))
+                self.delegate?.presentItems(items: self.items)
                 }
-            self.presenter?.presentItems(items: self.items)
             self.last = querySnapshot?.documents.last
-            print("getDocuments=>\(self.items.count)")
+                }
+            }
+    }
+    
+    func reGetDocuments() {
+        guard let lastSnapshot = last else {return}
+        db.collection("articles").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
+        if let err = err {
+            print("Error getting documents: \(err)")
+        } else {
+            for document in querySnapshot!.documents {
+                self.item = Item()
+                let title = document.data()["title"] as! String
+                let link = document.data()["link"] as! String
+                let feedTitle = document.data()["feedTitle"] as! String
+                let selected = document.data()["selected"] as! Bool
+                let docID = "\(document.documentID)"
+                    
+                self.item?.title = title
+                self.item?.link = link
+                self.item?.selected = selected
+                self.item?.docID = docID
+                self.item?.feedTitle = feedTitle
+                self.items.append(self.item!)
+                self.delegate?.rePresentItems(items: self.items)
+                    }
+            self.last = querySnapshot?.documents.last
             }
         }
     }
