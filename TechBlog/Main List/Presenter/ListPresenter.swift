@@ -9,19 +9,9 @@
 import Foundation
 import Firebase
 
-protocol ListPresenter: class {
-    func startDownload()
-    func reStartDownload()
-    func favo(_ documentID: String)
-    func unFavo(_ documentID: String)
-}
-
-class ListPresenterImpl: ListPresenter {
+class ListPresenterImpl {
     
     let db = Firestore.firestore()
-    var items: [Item] = []
-    var item:Item?
-    var last: DocumentSnapshot? = nil
     weak var view: ListViewProtocol?
     let itemModel: ItemModel
     
@@ -37,24 +27,18 @@ class ListPresenterImpl: ListPresenter {
     
     func reStartDownload() {
         itemModel.reGetDocuments()
-        print("reStartDownload success")
     }
     
     func favo(_ documentID: String) {
-        db.collection("articles").document(documentID).updateData([
-            "selected": true,
-            "tapTime": Date()
-        ])
+        itemModel.favo(documentID)
     }
     
     func unFavo(_ documentID: String) {
-        db.collection("articles").document(documentID).updateData([
-            "selected": false
-        ])
+        itemModel.unFavo(documentID)
     }
     
     private func reload(with items: [Item]) {
-        self.items = items
+        ListViewController.items = items
         view?.reloadData()
     }
 }

@@ -294,9 +294,9 @@
 		42AC76122456030400D5F95A /* Favo List */ = {
 			isa = PBXGroup;
 			children = (
-				422A77EA23BDFD3D005F9DD3 /* FavoListViewController.swift */,
-				42CF317523CB1E0A00F856B2 /* Favorite.swift */,
-				42AC76402457FE6C00D5F95A /* FavoListPresenter.swift */,
+				42AC769E245A750200D5F95A /* View */,
+				42AC769F245A751800D5F95A /* Presenter */,
+				42AC76A0245A752F00D5F95A /* Model */,
 			);
 			path = "Favo List";
 			sourceTree = "<group>";
@@ -341,6 +341,30 @@
 			isa = PBXGroup;
 			children = (
 				426F5C9A238D6D10009FEE19 /* ItemModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		42AC769E245A750200D5F95A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				422A77EA23BDFD3D005F9DD3 /* FavoListViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		42AC769F245A751800D5F95A /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				42AC76402457FE6C00D5F95A /* FavoListPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		42AC76A0245A752F00D5F95A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				42CF317523CB1E0A00F856B2 /* Favorite.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

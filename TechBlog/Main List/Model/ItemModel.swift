@@ -30,7 +30,6 @@ class ItemModel {
     var items = [Item]()
     var item: Item?
     var last: DocumentSnapshot? = nil
-    var presenter: ListPresenter?
     weak var delegate: ItemDelegate?
     
     init() {
@@ -83,5 +82,18 @@ class ItemModel {
             self.last = querySnapshot?.documents.last
             }
         }
+    }
+    
+    func favo(_ documentID: String) {
+        db.collection("articles").document(documentID).updateData([
+            "selected": true,
+            "tapTime": Date()
+        ])
+    }
+    
+    func unFavo(_ documentID: String) {
+        db.collection("articles").document(documentID).updateData([
+            "selected": false
+        ])
     }
 }

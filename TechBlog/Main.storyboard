@@ -132,7 +132,7 @@
             <objects>
                 <tableViewController id="a2c-T8-kRM" customClass="SettingTableViewController" customModule="EnginnerBlog" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="nF1-by-bNI">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -362,7 +362,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rx5-JE-v2b"/>
+        <segue reference="tWt-8r-aEH"/>
         <segue reference="ylE-4m-BkB"/>
     </inferredMetricsTieBreakers>
     <resources>

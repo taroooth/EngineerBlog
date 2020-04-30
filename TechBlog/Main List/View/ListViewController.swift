@@ -16,7 +16,7 @@ protocol ListViewProtocol: class {
 class ListViewController: UITableViewController, CellDelegate, ListViewProtocol {
 
     var faveButton: FaveButton?
-    var items = [Item]()
+    static var items = [Item]()
     var item:Item?
     var presenter: ListPresenterImpl!
     let db = Firestore.firestore()
@@ -55,8 +55,6 @@ extension ListViewController {
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
         //cellの境界線
         tableView.separatorStyle = .none
-        tableView.delegate = self
-        tableView.dataSource = self
     }
     
     func initializePresenter() {
@@ -65,14 +63,14 @@ extension ListViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
-            if presenter.items[indexPath.row].selected == true {
+            if ListViewController.items[indexPath.row].selected == true {
                 cell.faveButton.setSelected(selected: true, animated: false)
             }else {
                 cell.faveButton.setSelected(selected: false, animated: false)
             }
                 
-            cell.titleLabel?.text = presenter.items[indexPath.row].title
-            cell.feedTitleLabel?.text = presenter.items[indexPath.row].feedTitle
+            cell.titleLabel?.text = ListViewController.items[indexPath.row].title
+            cell.feedTitleLabel?.text = ListViewController.items[indexPath.row].feedTitle
                 
             //ラベルの表示行数を無制限にする
             cell.titleLabel?.numberOfLines = 0
@@ -89,7 +87,7 @@ extension ListViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //CustomCellからのsegue設定
-        performSegue(withIdentifier: "next", sender: presenter.items[indexPath.row].link)
+        performSegue(withIdentifier: "next", sender: ListViewController.items[indexPath.row].link)
     }
         
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -97,7 +95,7 @@ extension ListViewController {
     }
         
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.items.count
+        return ListViewController.items.count
     }
         
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
@@ -113,21 +111,21 @@ extension ListViewController {
         
     func didTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
-        presenter.favo("\(presenter.items[indexPath!].docID)")
-        presenter.items[indexPath!].selected = true
+        presenter.favo("\(ListViewController.items[indexPath!].docID)")
+        ListViewController.items[indexPath!].selected = true
     }
         
     func didUnTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
-        presenter.unFavo("\(presenter.items[indexPath!].docID)")
-        presenter.items[indexPath!].selected = false
+        presenter.unFavo("\(ListViewController.items[indexPath!].docID)")
+        ListViewController.items[indexPath!].selected = false
     }
             
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = self.tableView.indexPathForSelectedRow {
             let controller = segue.destination as! DetailViewController
-            controller.title = presenter.items[indexPath.row].title
-            controller.link = presenter.items[indexPath.row].link
+            controller.title = ListViewController.items[indexPath.row].title
+            controller.link = ListViewController.items[indexPath.row].link
         }
     }
 }
