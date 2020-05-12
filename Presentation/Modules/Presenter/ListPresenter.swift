@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import Domain
 
 class ListPresenterImpl {
     
@@ -29,8 +30,8 @@ class ListPresenterImpl {
         itemModel.reGetDocuments()
     }
     
-    func favo(_ documentID: String) {
-        itemModel.favo(documentID)
+    func favo(_ documentID: String, title: String, link: String, feedTitle: String) {
+        itemModel.favo(documentID, title: title, link: link, feedTitle: feedTitle)
     }
     
     func unFavo(_ documentID: String) {
@@ -38,8 +39,7 @@ class ListPresenterImpl {
     }
     
     private func reload(with items: [Item]) {
-        ListViewController.items = items
-        view?.reloadData()
+        view?.reloadData(items: items)
     }
 }
 

@@ -12,13 +12,19 @@ import SwifteriOS
 //プロフィール画面
 class ProfileTableViewController: UITableViewController {
 
-    var profileTitles = ["メールアドレス", "ユーザーID"]
-    var userInfomations: [String] = []
+    var profileTitles = ["ユーザーID: "]
+    var userInfomations = [""]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initializeTableView()
     }
 
+    func initializeTableView() {
+        //cellの境界線
+        tableView.separatorStyle = .none
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -29,19 +35,14 @@ class ProfileTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath)
-        let user = Auth.auth().currentUser
+        cell.textLabel?.numberOfLines = 0
+        cell.detailTextLabel?.numberOfLines = 0
 
-        cell.textLabel?.text = profileTitles[indexPath.row]
-        if let user = user {
-            if let email = user.email {
-                userInfomations.append("\(email)")
-            }else {
-                userInfomations.append("未登録")
-            }
-            userInfomations.append("\(String(describing: user.uid))")
-            
-            cell.detailTextLabel?.text = userInfomations[indexPath.row]
+        if let user = Auth.auth().currentUser {
+            userInfomations[0] = user.uid
         }
+        cell.textLabel?.text = profileTitles[indexPath.row]
+        cell.detailTextLabel?.text = userInfomations[indexPath.row]
         return cell
     }
 }

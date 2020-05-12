@@ -54,40 +54,28 @@ class SettingTableViewController: UITableViewController, UIPopoverPresentationCo
             performSegue(withIdentifier: "nextLoginViewController", sender: nil)
             
         case 2:
+            if let user = Auth.auth().currentUser {
+                let providerID = user.providerData[0].providerID
+
             let alert: UIAlertController = UIAlertController(title: "ログアウトします", message: "よろしいですか？", preferredStyle: UIAlertController.Style.alert)
             
             let alertAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {
                 (action: UIAlertAction!) -> Void in
-                do {
-                    try Auth.auth().signOut()
-                        print("ログアウトしました")
-                    } catch let signOutError as NSError {
-                        print ("Error signing out: %@", signOutError)
-                    }
+                Auth.auth().currentUser?.unlink(fromProvider: providerID) { (user, error) in
+                    print("ログアウトしました")
+                }
                     self.dismiss(animated: true, completion: nil)
-            })
+                })
             alert.addAction(alertAction)
             
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
             present(alert, animated: true, completion: nil)
-
+            }
             default:
                 print("SettingTableViewController no segue")
                 }
             }
-                
-
-//            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//
-//            let signOutVC: SignOutModalViewController = storyBoard.instantiateViewController(withIdentifier: "SignOutModalViewController") as! SignOutModalViewController
-//            signOutVC.modalPresentationStyle = .overFullScreen
-//            signOutVC.modalTransitionStyle = .crossDissolve
-//
-//            self.present(signOutVC, animated: false, completion: nil)
-            
-        
     }
-    
     // iPhoneで表示させる場合に必要
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none

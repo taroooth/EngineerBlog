@@ -36,22 +36,16 @@ class CreateUsersViewController: UIViewController, UITextFieldDelegate, SFSafari
             return
         }
         //新規ユーザー登録
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            print("メールで登録しました")
+        if let user = Auth.auth().currentUser {
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                print("メールでログインしました")
-                self.dismiss(animated: true, completion: nil)
-                if let error = error {
-                print("Creating the user failed! \(error)")
-                    return
-                }
-            }
-            if let error = error {
-                print("Creating the user failed! \(error)")
-                return
+                let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+                    user.link(with: credential) { (authResult, error) in
+                    print("メールで登録しました")
+                    self.dismiss(animated: true, completion: nil)
+                }}
             }
         }
-    }
+
     @IBAction func loginButtonTapped(_ sender: Any) {
         guard let email = self.emailForm.text, let password = self.passwordForm.text else {
             return
@@ -85,6 +79,7 @@ class CreateUsersViewController: UIViewController, UITextFieldDelegate, SFSafari
                 if let user = Auth.auth().currentUser {
                 user.link(with: credential) { authResult, error in
                             print("Twitter link successful")
+                    self.dismiss(animated: true, completion: nil)
                       if let error = error {
                         print("Twitter link failed \(error)")
                       }
@@ -113,30 +108,6 @@ class CreateUsersViewController: UIViewController, UITextFieldDelegate, SFSafari
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             print(user as Any)
         }
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        // ログインボタンの横縦幅
-//        let loginButtonWidth: CGFloat = self.loginButton.frame.width
-//        let loginButtonHeight: CGFloat = self.loginButton.frame.height
-//        let loginButtonX: CGFloat = self.loginButton.frame.minX
-//        let loginButtonY: CGFloat = self.loginButton.frame.maxY
-//
-//        let twtrLoginButton = TWTRLogInButton(logInCompletion: { session, error in
-//            if let session = session {
-//                let credential = TwitterAuthProvider.credential(withToken: session.authToken, secret: session.authTokenSecret)
-//
-//                Auth.auth().currentUser?.link(with: credential) { authResult, error in
-//                  if error != nil {
-//                    print("Sign in Twitter NG")
-//                    }
-//                  print("Sign in Twitter OK")
-//                }
-//            }
-//        })
-////         ボタンの位置とサイズを設定
-//        twtrLoginButton.frame = CGRect(x: loginButtonX, y: loginButtonY + 8, width: loginButtonWidth, height: loginButtonHeight)
-//        self.view.addSubview(twtrLoginButton)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

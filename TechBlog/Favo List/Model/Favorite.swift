@@ -37,7 +37,8 @@ class FavoModel {
     }
     
     func getDocuments() {
-        db.collection("articles").whereField("selected", isEqualTo: true).order(by: "tapTime", descending: true).limit(to: 20).getDocuments() { (querySnapshot, err) in
+        if let user = Auth.auth().currentUser {
+            db.collection("users").document("\(user.uid)").collection("favorites").order(by: "tapTime", descending: true).limit(to: 20).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -56,13 +57,15 @@ class FavoModel {
                 self.delegate?.presentFavos(favorites: self.favorites)
                 }
                 self.last = querySnapshot?.documents.last
+                }
             }
         }
     }
     
     func reGetDocuments() {
+        if let user = Auth.auth().currentUser {
         guard let lastSnapshot = last else {return}
-        db.collection("articles").whereField("selected", isEqualTo: true).order(by: "tapTime", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
+            db.collection("users").document("\(user.uid)").collection("favorites").order(by: "tapTime", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -84,21 +87,32 @@ class FavoModel {
                 }
                 self.delegate?.presentFavos(favorites: self.favorites)
                 self.last = querySnapshot?.documents.last
+                }
             }
         }
     }
     
-    func favo(_ documentID: String) {
+    func favo(_ documentID: String, title: String, link: String, feedTitle: String) {
+        if let user = Auth.auth().currentUser {
         db.collection("articles").document(documentID).updateData([
-            "selected": true,
-            "tapTime": Date()
-        ])
+            "selected": FieldValue.arrayUnion(["\(user.uid)"])
+            ])
+            db.collection("users").document(user.uid).collection("favorites").document().setData([
+                "title": title,
+                "link": link,
+                "feedTitle": feedTitle,
+                "tapTime": FieldValue.serverTimestamp()
+            ])
+        }
     }
     
     func unFavo(_ documentID: String) {
+        if let user = Auth.auth().currentUser {
         db.collection("articles").document(documentID).updateData([
-            "selected": false
-        ])
+            "selected": FieldValue.arrayRemove(["\(user.uid)"])
+            ])
+            db.collection("users").document(user.uid).collection("favorites").document(documentID).delete()
+        }
     }
     
 }

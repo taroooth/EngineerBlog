@@ -30,8 +30,8 @@ class FavoListPresenterImpl {
         favoModel.reGetDocuments()
     }
     
-    func favo(_ documentID: String) {
-        favoModel.favo(documentID)
+    func favo(_ documentID: String, title: String, link: String, feedTitle: String) {
+        favoModel.favo(documentID, title: title, link: link, feedTitle: feedTitle)
     }
     
     func unFavo(_ documentID: String) {
@@ -39,8 +39,7 @@ class FavoListPresenterImpl {
     }
     
     private func reload(with favorites: [Favorite]) {
-        FavoListViewController.favorites = favorites
-        view?.reloadData()
+        view?.reloadData(favorites: favorites)
     }
 }
 
