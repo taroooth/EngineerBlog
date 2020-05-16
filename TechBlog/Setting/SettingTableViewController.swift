@@ -55,26 +55,37 @@ class SettingTableViewController: UITableViewController, UIPopoverPresentationCo
             
         case 2:
             if let user = Auth.auth().currentUser {
+            
+            if user.providerData.count != 0 {
                 let providerID = user.providerData[0].providerID
-
+                    print("\(providerID)")
             let alert: UIAlertController = UIAlertController(title: "ログアウトします", message: "よろしいですか？", preferredStyle: UIAlertController.Style.alert)
             
             let alertAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {
                 (action: UIAlertAction!) -> Void in
                 Auth.auth().currentUser?.unlink(fromProvider: providerID) { (user, error) in
                     print("ログアウトしました")
-                }
-                    self.dismiss(animated: true, completion: nil)
+                    }
+                self.dismiss(animated: true, completion: nil)
                 })
             alert.addAction(alertAction)
             
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
             present(alert, animated: true, completion: nil)
+                
+            }else {
+                let actionSheet: UIAlertController = UIAlertController(title: "Alert", message: "ログインして下さい", preferredStyle: UIAlertController.Style.actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+                
+                actionSheet.addAction(okAction)
+                present(actionSheet, animated: true, completion: nil)
+                }
             }
             default:
                 print("SettingTableViewController no segue")
-                }
             }
+        }
     }
     // iPhoneで表示させる場合に必要
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
