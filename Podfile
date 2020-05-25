@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '8.0'
+platform :ios, '10.0'
 
 target 'TechBlog' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -13,6 +13,7 @@ target 'TechBlog' do
   pod 'Firebase/Core', :modular_headers => true
   pod 'Firebase/Firestore', :modular_headers => true
   pod 'Firebase/Auth', :modular_headers => true
+  pod 'Firebase/Messaging'
 end
 
 target 'Presentation' do
@@ -29,4 +30,6 @@ target 'Domain' do
   pod 'Firebase/Core', :modular_headers => true
   pod 'Firebase/Firestore', :modular_headers => true
   pod 'Firebase/Auth', :modular_headers => true
+  pod 'Firebase/Messaging'
+
 end
