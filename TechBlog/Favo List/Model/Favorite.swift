@@ -20,6 +20,7 @@ class Favorite{
     var link = ""
     var date = ""
     var selected: Bool!
+    var selectedCount = ""
     var tapTime: Date!
     var docID = ""
     var feedTitle = ""
@@ -31,11 +32,14 @@ class FavoModel {
     var favorite:Favorite?
     var last: DocumentSnapshot? = nil
     weak var delegate: FavoDelegate?
+    var date = Date()
     
     init() {
         self.db = Firestore.firestore()
     }
-    
+
+    //.order(by: "tapTime.\(user.uid)", descending: true)
+//    .order(by: "selected.\(user.uid)", descending: true)
     func getDocuments() {
         if let user = Auth.auth().currentUser {
             db.collection("users").document("\(user.uid)").collection("favorites").order(by: "tapTime", descending: true).limit(to: 20).getDocuments() { (querySnapshot, err) in
@@ -46,11 +50,12 @@ class FavoModel {
             for document in querySnapshot!.documents {
                 self.favorite = Favorite()
                 //スナップショットからデータを取り出しfavoritesに格納
-                let timestamp: Timestamp = document.data()["tapTime"] as! Timestamp
-                let dateValue = timestamp.dateValue()
                 self.favorite?.title = document.data()["title"] as! String
                 self.favorite?.feedTitle = document.data()["feedTitle"] as! String
                 self.favorite?.link = document.data()["link"] as! String
+                
+                let timestamp: Timestamp = document.data()["tapTime"] as! Timestamp
+                let dateValue = timestamp.dateValue()
                 self.favorite?.tapTime = dateValue
                 self.favorite?.docID = "\(document.documentID)"
                 self.favorites.append(self.favorite!)
@@ -62,6 +67,8 @@ class FavoModel {
         }
     }
     
+   // .order(by: "\(user.uid)", descending: true)
+//    .order(by: "\(user.uid)", descending: true)
     func reGetDocuments() {
         if let user = Auth.auth().currentUser {
         guard let lastSnapshot = last else {return}
@@ -94,7 +101,7 @@ class FavoModel {
     
     func favo(_ documentID: String, title: String, link: String, feedTitle: String) {
         if let user = Auth.auth().currentUser {
-        db.collection("articles").document(documentID).updateData([
+            db.collection("articles").document(documentID).updateData([
             "selected": FieldValue.arrayUnion(["\(user.uid)"])
             ])
             db.collection("users").document(user.uid).collection("favorites").document().setData([

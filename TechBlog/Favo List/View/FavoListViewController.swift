@@ -38,6 +38,7 @@ class FavoListViewController: UITableViewController, CellDelegate, FavoListProto
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter.startDownLoad()
+        print(self.favorites.count)
     }
     
     override func viewDidAppear(_ animated: Bool) {

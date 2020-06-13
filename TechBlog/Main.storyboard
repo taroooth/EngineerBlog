@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sEc-vA-yGu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sEc-vA-yGu">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -10,42 +10,22 @@
         <!--Detail View Controller-->
         <scene sceneID="W11-Cd-Bg8">
             <objects>
-                <viewController id="8lR-9d-eVE" customClass="DetailViewController" customModule="EnginnerBlog" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8lR-9d-eVE" customClass="DetailViewController" customModule="EngineerBlog" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qP8-kp-Puy">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xl7-Wp-rzT">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="xl7-Wp-rzT" firstAttribute="top" secondItem="36u-dj-brU" secondAttribute="top" id="ccy-bH-97v"/>
-                            <constraint firstItem="36u-dj-brU" firstAttribute="bottom" secondItem="xl7-Wp-rzT" secondAttribute="bottom" id="hoL-W4-ajA"/>
-                            <constraint firstItem="xl7-Wp-rzT" firstAttribute="leading" secondItem="36u-dj-brU" secondAttribute="leading" id="uTh-eX-HXH"/>
-                            <constraint firstItem="36u-dj-brU" firstAttribute="trailing" secondItem="xl7-Wp-rzT" secondAttribute="trailing" id="uq3-ZW-g87"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="36u-dj-brU"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ETI-ha-v9b"/>
-                    <connections>
-                        <outlet property="webView" destination="xl7-Wp-rzT" id="owF-kI-hC2"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oZD-Mr-rit" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5262" y="-263"/>
+            <point key="canvasLocation" x="5260.8695652173919" y="-263.16964285714283"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="z0k-VF-EiE">
             <objects>
-                <tabBarController id="sEc-vA-yGu" customClass="MainViewController" customModule="EnginnerBlog" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="sEc-vA-yGu" customClass="MainViewController" customModule="EngineerBlog" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Yes-lf-x3A"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vA9-09-KSP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -66,21 +46,21 @@
         <!--Home-->
         <scene sceneID="lTI-FL-PQX">
             <objects>
-                <tableViewController id="f6x-Bf-GM6" customClass="ListViewController" customModule="EnginnerBlog" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="f6x-Bf-GM6" customClass="ListViewController" customModule="EngineerBlog" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kVo-Q7-H3t">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="0.91764705882352937" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomCell" id="6WP-KI-XSn" customClass="CustomCell" customModule="EnginnerBlog" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CustomCell" id="6WP-KI-XSn" customClass="CustomCell" customModule="EngineerBlog" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6WP-KI-XSn" id="g0e-0u-NEm">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="8lR-9d-eVE" kind="show" identifier="next" id="ylE-4m-BkB"/>
+                                    <segue destination="8lR-9d-eVE" kind="presentation" identifier="next" modalPresentationStyle="fullScreen" id="ylE-4m-BkB"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -98,13 +78,13 @@
         <!--Favorites-->
         <scene sceneID="7az-fN-Hp9">
             <objects>
-                <tableViewController id="iDd-p6-Zvf" customClass="FavoListViewController" customModule="EnginnerBlog" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="iDd-p6-Zvf" customClass="FavoListViewController" customModule="EngineerBlog" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="rRI-Pf-elF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.6303562088340271" green="1" blue="0.91770420142951059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomCell2" id="IMZ-he-UV5" customClass="CustomCell" customModule="EnginnerBlog" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomCell2" id="IMZ-he-UV5" customClass="CustomCell" customModule="EngineerBlog" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IMZ-he-UV5" id="t7H-hK-c9z">
@@ -130,9 +110,9 @@
         <!--Settings-->
         <scene sceneID="Abu-lE-VD3">
             <objects>
-                <tableViewController id="a2c-T8-kRM" customClass="SettingTableViewController" customModule="EnginnerBlog" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="a2c-T8-kRM" customClass="SettingTableViewController" customModule="EngineerBlog" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="nF1-by-bNI">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -173,7 +153,7 @@
         <!--Sign Out Modal View Controller-->
         <scene sceneID="Q2q-In-usN">
             <objects>
-                <viewController storyboardIdentifier="SignOutModalViewController" modalPresentationStyle="overCurrentContext" id="un6-oN-VBc" customClass="SignOutModalViewController" customModule="EnginnerBlog" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignOutModalViewController" modalPresentationStyle="overCurrentContext" id="un6-oN-VBc" customClass="SignOutModalViewController" customModule="EngineerBlog" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o0Y-QF-4Ed">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -189,7 +169,7 @@
         <!--Create Users View Controller-->
         <scene sceneID="Fr7-Lj-cZb">
             <objects>
-                <viewController id="trA-H2-sR3" customClass="CreateUsersViewController" customModule="EnginnerBlog" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="trA-H2-sR3" customClass="CreateUsersViewController" customModule="EngineerBlog" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ds9-FW-vwH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -317,7 +297,7 @@
         <!--Settings-->
         <scene sceneID="Emf-D9-cHP">
             <objects>
-                <tableViewController id="Wzk-V0-KXe" customClass="ProfileTableViewController" customModule="EnginnerBlog" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Wzk-V0-KXe" customClass="ProfileTableViewController" customModule="EngineerBlog" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="2tl-fN-F84">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -362,7 +342,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rx5-JE-v2b"/>
+        <segue reference="tWt-8r-aEH"/>
         <segue reference="ylE-4m-BkB"/>
     </inferredMetricsTieBreakers>
     <resources>

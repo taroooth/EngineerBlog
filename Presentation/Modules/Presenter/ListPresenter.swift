@@ -8,7 +8,7 @@
 
 import Foundation
 import Firebase
-import Domain
+//import Domain
 
 class ListPresenterImpl {
     
@@ -20,6 +20,10 @@ class ListPresenterImpl {
         self.view = view
         self.itemModel = ItemModel()
         itemModel.delegate = self
+    }
+    
+    func advanceDownload() {
+        itemModel.advanceGetDocuments()
     }
     
     func startDownload() {
@@ -41,6 +45,10 @@ class ListPresenterImpl {
     private func reload(with items: [Item]) {
         view?.reloadData(items: items)
     }
+    
+    private func stock(with searchTitles: [String]) {
+        view?.stockData(searchTitles: searchTitles)
+    }
 }
 
 extension ListPresenterImpl: ItemDelegate {
@@ -50,5 +58,9 @@ extension ListPresenterImpl: ItemDelegate {
     
     func rePresentItems(items: [Item]) {
         reload(with: items)
+    }
+    
+    func presentSearchItems(searchTitles: [String]) {
+        stock(with: searchTitles)
     }
 }

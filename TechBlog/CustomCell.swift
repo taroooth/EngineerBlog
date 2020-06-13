@@ -33,7 +33,6 @@ class CustomCell: UITableViewCell, FaveButtonDelegate {
     @IBOutlet weak var faveButton: FaveButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var feedTitleLabel: UILabel!
-    @IBOutlet weak var thumbnailImage: UIImageView!
     @IBAction func didButtonTapped(_ sender: FaveButton) {
         sender.switchAction(onAction: {
             self.delegate?.didTapButton(cell: self)
@@ -51,12 +50,14 @@ class CustomCell: UITableViewCell, FaveButtonDelegate {
         self.backView.layer.cornerRadius = 8
         self.backView.layer.borderColor = UIColor.clear.cgColor
         self.backView.layer.masksToBounds = true
+        self.backView.backgroundColor = .white
 
         self.layer.shadowOpacity = 0.18
         self.layer.shadowOffset = CGSize(width: 0, height: 2)
         self.layer.shadowRadius = 2
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.masksToBounds = false
+
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
