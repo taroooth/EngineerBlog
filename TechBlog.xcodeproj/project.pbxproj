@@ -15,6 +15,11 @@
 		422B8FC7246AF36600F8E670 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 422B8FC6246AF36500F8E670 /* Launch Screen.storyboard */; };
 		422B8FC9246AF3AD00F8E670 /* 104478-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 422B8FC8246AF3AD00F8E670 /* 104478-512.png */; };
 		42317B392445A96900BDD214 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42317B382445A96900BDD214 /* ListViewController.swift */; };
+		4235960D2499170B00DE8289 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423595EF2499170B00DE8289 /* SystemConfiguration.framework */; };
+		423CDB49249B357600566398 /* MainPagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CDB48249B357600566398 /* MainPagingViewController.swift */; };
+		423CDB4E249B368100566398 /* WebTagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CDB4D249B368100566398 /* WebTagListViewController.swift */; };
+		423CDB53249B958800566398 /* WebTagListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CDB52249B958800566398 /* WebTagListPresenter.swift */; };
+		423CDB55249B960D00566398 /* WebTagItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CDB54249B960D00566398 /* WebTagItem.swift */; };
 		426F5C9B238D6D10009FEE19 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F5C9A238D6D10009FEE19 /* ItemModel.swift */; };
 		426F5CB123AD8D18009FEE19 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F5CAF23AD8D18009FEE19 /* CustomCell.swift */; };
 		426F5CB223AD8D18009FEE19 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 426F5CB023AD8D18009FEE19 /* CustomCell.xib */; };
@@ -38,6 +43,10 @@
 		42DB822024842DC600C5582F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42DB821E24842DC600C5582F /* GoogleService-Info.plist */; };
 		42DB822124842DC600C5582F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42DB821E24842DC600C5582F /* GoogleService-Info.plist */; };
 		42DB822224842DC600C5582F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42DB821E24842DC600C5582F /* GoogleService-Info.plist */; };
+		42DB82B22495603F00C5582F /* Twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 42DB82942495603D00C5582F /* Twitter.png */; };
+		42DB82B32495603F00C5582F /* Twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 42DB82942495603D00C5582F /* Twitter.png */; };
+		42DB82B42495603F00C5582F /* Twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 42DB82942495603D00C5582F /* Twitter.png */; };
+		42DB82B52495603F00C5582F /* Twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 42DB82942495603D00C5582F /* Twitter.png */; };
 		42E4A5D0232C5B58009C2B00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E4A5CF232C5B58009C2B00 /* AppDelegate.swift */; };
 		42E4A5E9232C6246009C2B00 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E4A5E8232C6246009C2B00 /* DetailViewController.swift */; };
 		A5F32F6E4188B24FD1B764B4 /* Pods_TechBlog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3EC05930DCDEC4694F75F30 /* Pods_TechBlog.framework */; };
@@ -127,6 +136,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3347A1AB6546F0A3977529B8F199DC41;
 			remoteInfo = PromisesObjC;
+		};
+		423CDAF7249B276D00566398 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42CD141723F60556000AE29F /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BDD18ACB625B597CC06D7006C44D7FE5;
+			remoteInfo = Parchment;
 		};
 		42837C00241ADE970047FA59 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -278,6 +294,11 @@
 		422B8FC6246AF36500F8E670 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		422B8FC8246AF3AD00F8E670 /* 104478-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "104478-512.png"; sourceTree = "<group>"; };
 		42317B382445A96900BDD214 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		423595EF2499170B00DE8289 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		423CDB48249B357600566398 /* MainPagingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPagingViewController.swift; sourceTree = "<group>"; };
+		423CDB4D249B368100566398 /* WebTagListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebTagListViewController.swift; sourceTree = "<group>"; };
+		423CDB52249B958800566398 /* WebTagListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebTagListPresenter.swift; sourceTree = "<group>"; };
+		423CDB54249B960D00566398 /* WebTagItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebTagItem.swift; sourceTree = "<group>"; };
 		42607594246F081400837856 /* EngineerBlogRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngineerBlogRelease.entitlements; sourceTree = "<group>"; };
 		42607595246F088400837856 /* EngineerBlog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngineerBlog.entitlements; sourceTree = "<group>"; };
 		426F5C9A238D6D10009FEE19 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
@@ -308,6 +329,7 @@
 		42CD141723F60556000AE29F /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		42CF317523CB1E0A00F856B2 /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		42DB821E24842DC600C5582F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		42DB82942495603D00C5582F /* Twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter.png; sourceTree = "<group>"; };
 		42E4A5CC232C5B58009C2B00 /* EngineerBlog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EngineerBlog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42E4A5CF232C5B58009C2B00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42E4A5DB232C5B5D009C2B00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -345,6 +367,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4235960D2499170B00DE8289 /* SystemConfiguration.framework in Frameworks */,
 				42A5ECFF24176BD600D0556E /* WebKit.framework in Frameworks */,
 				A5F32F6E4188B24FD1B764B4 /* Pods_TechBlog.framework in Frameworks */,
 			);
@@ -398,7 +421,9 @@
 			isa = PBXGroup;
 			children = (
 				42317B382445A96900BDD214 /* ListViewController.swift */,
+				423CDB4D249B368100566398 /* WebTagListViewController.swift */,
 				42A351F123E0868A003941A9 /* MainViewController.swift */,
+				423CDB48249B357600566398 /* MainPagingViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -407,6 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				42AC76162456085C00D5F95A /* ListPresenter.swift */,
+				423CDB52249B958800566398 /* WebTagListPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -415,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				426F5C9A238D6D10009FEE19 /* ItemModel.swift */,
+				423CDB54249B960D00566398 /* WebTagItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -509,6 +536,7 @@
 				06CF18D323F791F0003DA8A4 /* GTMSessionFetcher.framework */,
 				06CF18D523F791F0003DA8A4 /* leveldb.framework */,
 				42CD145823F60556000AE29F /* nanopb.framework */,
+				423CDAF8249B276D00566398 /* Parchment.framework */,
 				42CD145A23F60556000AE29F /* Pods_TechBlog.framework */,
 				06CF18D723F791F0003DA8A4 /* FBLPromises.framework */,
 			);
@@ -558,6 +586,7 @@
 				42837C0E241AE26C0047FA59 /* EngineerBlog-Bridging-Header.h */,
 				42A5ECA523FB242A00D0556E /* ButtonTwitterNormal.png */,
 				42837BF4241AD5560047FA59 /* heart.png */,
+				42DB82942495603D00C5582F /* Twitter.png */,
 				42E4A5DB232C5B5D009C2B00 /* Info.plist */,
 				42DB821E24842DC600C5582F /* GoogleService-Info.plist */,
 				06CF18D923F79272003DA8A4 /* Default-568h@2x.png */,
@@ -570,6 +599,7 @@
 		42E4A5E5232C6206009C2B00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				423595EF2499170B00DE8289 /* SystemConfiguration.framework */,
 				42E4A5E6232C6206009C2B00 /* WebKit.framework */,
 				F3EC05930DCDEC4694F75F30 /* Pods_TechBlog.framework */,
 			);
@@ -712,12 +742,15 @@
 				TargetAttributes = {
 					42AC76A72461545A00D5F95A = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1150;
 					};
 					42AC76D52461549600D5F95A = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1150;
 					};
 					42AC76E6246154C000D5F95A = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1150;
 					};
 					42E4A5CB232C5B58009C2B00 = {
 						CreatedOnToolsVersion = 10.3;
@@ -840,6 +873,13 @@
 			remoteRef = 06CF18D623F791F0003DA8A4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		423CDAF8249B276D00566398 /* Parchment.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Parchment.framework;
+			remoteRef = 423CDAF7249B276D00566398 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		42837C01241ADE970047FA59 /* SwifteriOS.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -932,6 +972,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42DB822024842DC600C5582F /* GoogleService-Info.plist in Resources */,
+				42DB82B32495603F00C5582F /* Twitter.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -940,6 +981,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42DB822124842DC600C5582F /* GoogleService-Info.plist in Resources */,
+				42DB82B42495603F00C5582F /* Twitter.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,6 +990,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42DB822224842DC600C5582F /* GoogleService-Info.plist in Resources */,
+				42DB82B52495603F00C5582F /* Twitter.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -958,6 +1001,7 @@
 				42A5ECD82417667900D0556E /* Assets.xcassets in Resources */,
 				42837BF5241AD5560047FA59 /* heart.png in Resources */,
 				42DB821F24842DC600C5582F /* GoogleService-Info.plist in Resources */,
+				42DB82B22495603F00C5582F /* Twitter.png in Resources */,
 				422B8FC9246AF3AD00F8E670 /* 104478-512.png in Resources */,
 				422B8FC7246AF36600F8E670 /* Launch Screen.storyboard in Resources */,
 				06CF18DA23F79273003DA8A4 /* Default-568h@2x.png in Resources */,
@@ -1042,6 +1086,7 @@
 				426F5C9B238D6D10009FEE19 /* ItemModel.swift in Sources */,
 				426F5CB123AD8D18009FEE19 /* CustomCell.swift in Sources */,
 				42AC76412457FE6C00D5F95A /* FavoListPresenter.swift in Sources */,
+				423CDB49249B357600566398 /* MainPagingViewController.swift in Sources */,
 				42A351F623E2040F003941A9 /* SettingTableViewController.swift in Sources */,
 				42CF317623CB1E0A00F856B2 /* Favorite.swift in Sources */,
 				422A77EB23BDFD3E005F9DD3 /* FavoListViewController.swift in Sources */,
@@ -1049,7 +1094,10 @@
 				42A351F223E0868A003941A9 /* MainViewController.swift in Sources */,
 				42E4A5E9232C6246009C2B00 /* DetailViewController.swift in Sources */,
 				42AC76172456085D00D5F95A /* ListPresenter.swift in Sources */,
+				423CDB53249B958800566398 /* WebTagListPresenter.swift in Sources */,
+				423CDB55249B960D00566398 /* WebTagItem.swift in Sources */,
 				42317B392445A96900BDD214 /* ListViewController.swift in Sources */,
+				423CDB4E249B368100566398 /* WebTagListViewController.swift in Sources */,
 				42A351F823E20AFD003941A9 /* CreatUsersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1078,6 +1126,7 @@
 		42AC76B12461545A00D5F95A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1100,6 +1149,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1110,6 +1160,7 @@
 		42AC76B22461545A00D5F95A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1142,6 +1193,7 @@
 		42AC76E02461549600D5F95A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1164,6 +1216,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1174,6 +1227,7 @@
 		42AC76E12461549600D5F95A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1206,6 +1260,7 @@
 		42AC76F1246154C000D5F95A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1227,6 +1282,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1237,6 +1293,7 @@
 		42AC76F2246154C000D5F95A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1387,13 +1444,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8205F51C62DCFA592AC5C56F /* Pods-TechBlog.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_ENTITLEMENTS = TechBlog/EngineerBlog.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_HEADERS_RUN_UNIFDEF = NO;
-				CURRENT_PROJECT_VERSION = 1.0.13;
+				CURRENT_PROJECT_VERSION = 1.0.14;
 				DEVELOPMENT_TEAM = AJ4LF65N26;
 				INFOPLIST_FILE = "$(SRCROOT)/TechBlog/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1419,13 +1477,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B6F9ACA8A6E90A0A1A738A90 /* Pods-TechBlog.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_ENTITLEMENTS = TechBlog/EngineerBlogRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_HEADERS_RUN_UNIFDEF = NO;
-				CURRENT_PROJECT_VERSION = 1.0.13;
+				CURRENT_PROJECT_VERSION = 1.0.14;
 				DEVELOPMENT_TEAM = AJ4LF65N26;
 				GCC_OPTIMIZATION_LEVEL = 1;
 				INFOPLIST_FILE = "$(SRCROOT)/TechBlog/Info.plist";

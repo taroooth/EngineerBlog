@@ -10,8 +10,9 @@ import UIKit
 import WebKit
 import Firebase
 import FaveButton
+import SwifteriOS
 
-class DetailViewController : UIViewController, FaveButtonDelegate {
+class DetailViewController : UIViewController, FaveButtonDelegate, UIScrollViewDelegate {
     
     var webView: WKWebView!
     var articleTitle:String!
@@ -24,6 +25,11 @@ class DetailViewController : UIViewController, FaveButtonDelegate {
     // portrait のみを想定
     var topPadding:CGFloat = 0
     let db = Firestore.firestore()
+    var favoButton = FaveButton()
+    var tweetButton = UIButton()
+    var includeView = UIView()
+    
+    private var lastContentOffset: CGFloat = 0
     
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
     }
@@ -40,6 +46,10 @@ class DetailViewController : UIViewController, FaveButtonDelegate {
         super.viewDidLoad()
         initializeWebView()
         initializeButton()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     func initializeWebView() {
@@ -63,6 +73,7 @@ class DetailViewController : UIViewController, FaveButtonDelegate {
             self.webView.load(request)
         }
         webView.allowsBackForwardNavigationGestures = true
+        self.webView?.scrollView.delegate = self
         // インスタンスをビューに追加する
         self.view.addSubview(webView)
     }
@@ -73,8 +84,8 @@ class DetailViewController : UIViewController, FaveButtonDelegate {
             backButton.setTitleColor(.blue, for: .normal)
             backButton.addTarget(self, action: #selector(pushBackButton), for: .touchUpInside)
         
-        let favoButton:FaveButton = FaveButton(frame: CGRect(x: view.frame.origin.x + view.frame.size.width - 75, y: view.frame.origin.y + view.frame.size.height - 100, width: 50, height: 50),
-            faveIconNormal: UIImage(named: "heart"))
+        favoButton = FaveButton(frame: CGRect(x: view.frame.origin.x + view.frame.size.width - 75, y: view.frame.origin.y + view.frame.size.height - 75, width: 50, height: 50),
+                      faveIconNormal: UIImage(named: "heart"))
         favoButton.backgroundColor = .white
         favoButton.layer.borderWidth = 2
         favoButton.layer.cornerRadius = favoButton.frame.width / 2
@@ -87,8 +98,26 @@ class DetailViewController : UIViewController, FaveButtonDelegate {
             favoButton.setSelected(selected: false, animated: false)
         }
         
+        tweetButton = UIButton(frame: CGRect(x: favoButton.frame.origin.x - 50, y: favoButton.frame.origin.y, width: 50, height: 50))
+        tweetButton.backgroundColor = .white
+        tweetButton.setImage(UIImage(named: "Twitter"), for: .normal)
+        tweetButton.layer.borderWidth = 2
+        tweetButton.layer.cornerRadius = favoButton.frame.width / 2
+        tweetButton.layer.borderColor = UIColor.gray.cgColor
+        tweetButton.layer.masksToBounds = true
+        tweetButton.addTarget(self, action: #selector(pushTweetButton), for: .touchUpInside)
+        
+        includeView = UIView(frame: CGRect(x: tweetButton.frame.origin.x - 10, y: favoButton.frame.origin.y - 10, width: favoButton.frame.width + tweetButton.frame.width + 20, height: favoButton.frame.height + 20))
+        includeView.backgroundColor = .white
+        includeView.layer.borderWidth = 2
+        includeView.layer.cornerRadius = includeView.frame.width * 0.1
+        includeView.layer.borderColor = UIColor.gray.cgColor
+        includeView.layer.masksToBounds = true
+        
         self.view.addSubview(backButton)
+        self.view.addSubview(includeView)
         self.view.addSubview(favoButton)
+        self.view.addSubview(tweetButton)
     }
     
     @objc func pushBackButton(sender: UIButton){
@@ -96,7 +125,6 @@ class DetailViewController : UIViewController, FaveButtonDelegate {
     }
     
     @objc func pushFavoButton(sender: FaveButton){
-
         if let user = Auth.auth().currentUser {
             sender.changeAction(onAction: {
                 self.db.collection("articles").document(self.docID).updateData([
@@ -123,7 +151,36 @@ class DetailViewController : UIViewController, FaveButtonDelegate {
                 }
             })
         }
-            
+    }
+
+    @objc func pushTweetButton(sender: UIButton){
+        let text = "\(self.articleTitle!) \(self.link!)"
+        let encodedText = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        if let encodedText = encodedText,
+            let url = URL(string: "https://twitter.com/intent/tweet?text=\(encodedText)") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    //スクロール開始
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        includeView.isHidden = true
+        tweetButton.isHidden = true
+        favoButton.isHidden = true
+    }
+    
+    //スクロール中
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        includeView.isHidden = true
+        tweetButton.isHidden = true
+        favoButton.isHidden = true
+    }
+    
+    //スクロール終了
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
+        includeView.isHidden = false
+        tweetButton.isHidden = false
+        favoButton.isHidden = false
     }
 }
 
@@ -137,6 +194,5 @@ extension FaveButton {
         case false:
             offAction()
         }
-
     }
 }

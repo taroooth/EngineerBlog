@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SwifteriOS
+import SystemConfiguration
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

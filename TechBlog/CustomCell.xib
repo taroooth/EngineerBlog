@@ -37,8 +37,8 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2M3-Ly-Jao" customClass="FaveButton" customModule="FaveButton">
                                         <rect key="frame" x="254" y="64" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="6QA-uA-hUw"/>
-                                            <constraint firstAttribute="height" constant="30" id="l6Y-6o-heg"/>
+                                            <constraint firstAttribute="height" constant="30" id="Ssy-v7-gWe"/>
+                                            <constraint firstAttribute="width" constant="30" id="use-2B-gpg"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="heart.png"/>
                                         <userDefinedRuntimeAttributes>

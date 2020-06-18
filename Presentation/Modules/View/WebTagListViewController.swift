@@ -1,26 +1,24 @@
 //
-//  ListViewController.swift
+//  WebTagListViewController.swift
 //  TechBlog
 //
-//  Created by 岡田龍太朗 on 2019/09/14.
-//  Copyright © 2019 岡田龍太朗. All rights reserved.
+//  Created by 岡田龍太朗 on 2020/06/18.
+//  Copyright © 2020 岡田龍太朗. All rights reserved.
 //
+
 import UIKit
 import Firebase
 import FaveButton
 import WebKit
 import Parchment
 
-protocol ListViewProtocol: class {
-    func reloadData(with miscellaneous_items: [Item])
-    func stockData(with searchTitles: [String])
+protocol WebTagListViewProtocol: class {
+    func reloadData(web_items: [Item])
 }
 
-class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CellDelegate, ListViewProtocol, UISearchBarDelegate {
+class WebTagListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CellDelegate, WebTagListViewProtocol, UISearchBarDelegate {
     
     var faveButton: FaveButton?
-    var items = [Item]()
-    var item:Item?
     //ネイティブアプリ
     var native_items = [Item]()
     var native_item: Item?
@@ -33,7 +31,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     var searchItems = [SearchItem]()
     var searchItem: SearchItem?
     var searchTitles: [String] = []
-    var presenter: ListPresenterImpl!
+    var presenter: WebTagListPresenterImpl!
     let db = Firestore.firestore()
     var last: DocumentSnapshot? = nil
     var searchResults:[String] = []
@@ -41,14 +39,14 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var tableView = UITableView()
 }
 
-extension ListViewController {
+extension WebTagListViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
         initializeTableView()
         initializePresenter()
         presenter.startDownload()
-        presenter.advanceDownload()
         Auth.auth().signInAnonymously() { (authResult, error) in
             guard let user = authResult?.user else { return }
             let isAnonymous = user.isAnonymous  // true
@@ -62,12 +60,12 @@ extension ListViewController {
         super.didReceiveMemoryWarning()
     }
     
-    func reloadData(with miscellaneous_items: [Item]) {
-        self.miscellaneous_items = miscellaneous_items
+    func reloadData(web_items: [Item]) {
+        self.web_items = web_items
         tableView.reloadData()
     }
     
-    func stockData(with searchTitles: [String]) {
+    func stockData(searchTitles: [String]) {
         self.searchTitles = searchTitles
         tableView.reloadData()
     }
@@ -82,6 +80,7 @@ extension ListViewController {
     }
     
     func initializeTableView() {
+        
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
         //cellの境界線
         tableView.separatorStyle = .none
@@ -91,7 +90,7 @@ extension ListViewController {
     }
     
     func initializePresenter() {
-        presenter = ListPresenterImpl(view: self)
+        presenter = WebTagListPresenterImpl(view: self)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -115,7 +114,7 @@ extension ListViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
-                if miscellaneous_items[indexPath.row].selected == true {
+                if web_items[indexPath.row].selected == true {
                 cell.faveButton.setSelected(selected: true, animated: false)
             }else {
                 cell.faveButton.setSelected(selected: false, animated: false)
@@ -124,8 +123,8 @@ extension ListViewController {
             if searchBar.text != "" {
                 cell.titleLabel?.text = "\(searchResults[indexPath.row])"
             } else {
-                cell.titleLabel?.text = miscellaneous_items[indexPath.row].title
-                cell.feedTitleLabel?.text = miscellaneous_items[indexPath.row].feedTitle
+                cell.titleLabel?.text = web_items[indexPath.row].title
+                cell.feedTitleLabel?.text = web_items[indexPath.row].feedTitle
             }
             //ラベルの表示行数を無制限にする
             cell.titleLabel?.numberOfLines = 0
@@ -143,7 +142,7 @@ extension ListViewController {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         //CustomCellからのsegue設定
-        performSegue(withIdentifier: "next", sender: miscellaneous_items[indexPath.row].link)
+        performSegue(withIdentifier: "next", sender: web_items[indexPath.row].link)
     }
         
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -154,7 +153,7 @@ extension ListViewController {
         if searchBar.text != "" {
             return searchResults.count
         } else {
-            return miscellaneous_items.count
+            return web_items.count
         }
     }
     
@@ -196,29 +195,30 @@ extension ListViewController {
         
     func didTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
-        presenter.favo(miscellaneous_items[indexPath!].docID,
-                       title: miscellaneous_items[indexPath!].title,
-                       link: miscellaneous_items[indexPath!].link,
-                       feedTitle: miscellaneous_items[indexPath!].feedTitle
+        presenter.favo(web_items[indexPath!].docID,
+                       title: web_items[indexPath!].title,
+                       link: web_items[indexPath!].link,
+                       feedTitle: web_items[indexPath!].feedTitle
                        )
-        miscellaneous_items[indexPath!].selected = true
+        web_items[indexPath!].selected = true
     }
         
     func didUnTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
         presenter.unFavo(miscellaneous_items[indexPath!].docID)
-        miscellaneous_items[indexPath!].selected = false
+        web_items[indexPath!].selected = false
     }
             
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = self.tableView.indexPathForSelectedRow {
             let controller = segue.destination as! DetailViewController
-            controller.articleTitle = miscellaneous_items[indexPath.row].title
-            controller.link = miscellaneous_items[indexPath.row].link
-            controller.pubDate = miscellaneous_items[indexPath.row].pubDate
-            controller.selected = miscellaneous_items[indexPath.row].selected
-            controller.docID = miscellaneous_items[indexPath.row].docID
-            controller.feedTitle = miscellaneous_items[indexPath.row].feedTitle
+            controller.articleTitle = web_items[indexPath.row].title
+            controller.link = web_items[indexPath.row].link
+            controller.pubDate = web_items[indexPath.row].pubDate
+            controller.selected = web_items[indexPath.row].selected
+            controller.docID = web_items[indexPath.row].docID
+            controller.feedTitle = web_items[indexPath.row].feedTitle
         }
     }
 }
+

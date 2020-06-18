@@ -27,11 +27,11 @@ class ListPresenterImpl {
     }
     
     func startDownload() {
-        itemModel.getDocuments()
+        itemModel.getMiscellaneousDocuments()
     }
     
     func reStartDownload() {
-        itemModel.reGetDocuments()
+//        itemModel.reGetDocuments()
     }
     
     func favo(_ documentID: String, title: String, link: String, feedTitle: String) {
@@ -42,25 +42,25 @@ class ListPresenterImpl {
         itemModel.unFavo(documentID)
     }
     
-    private func reload(with items: [Item]) {
-        view?.reloadData(items: items)
+    private func reload(with miscellaneous_items: [Item]) {
+        view?.reloadData(with: miscellaneous_items)
     }
     
     private func stock(with searchTitles: [String]) {
-        view?.stockData(searchTitles: searchTitles)
+        view?.stockData(with: searchTitles)
     }
 }
 
 extension ListPresenterImpl: ItemDelegate {
-    func presentItems(items: [Item]) {
-        reload(with: items)
+    func presentItems(with miscellaneous_items: [Item]) {
+        reload(with: miscellaneous_items)
     }
     
-    func rePresentItems(items: [Item]) {
-        reload(with: items)
+    func rePresentItems(with miscellaneous_items: [Item]) {
+        reload(with: miscellaneous_items)
     }
     
-    func presentSearchItems(searchTitles: [String]) {
+    func presentSearchItems(with searchTitles: [String]) {
         stock(with: searchTitles)
     }
 }

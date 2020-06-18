@@ -13,21 +13,5 @@ target 'TechBlog' do
   pod 'Firebase/Core', :modular_headers => true
   pod 'Firebase/Firestore', :modular_headers => true
   pod 'Firebase/Auth', :modular_headers => true
+  pod 'Parchment'
 end
-
-#target 'Presentation' do
-#  use_frameworks!
-#
-#  pod 'FaveButton'
-#end
-#
-#target 'Domain' do
-#  use_frameworks!
-#
-#  pod 'Firebase/Analytics', :modular_headers => true
-#  # add pods for any other desired Firebase products
-#  pod 'Firebase/Core', :modular_headers => true
-#  pod 'Firebase/Firestore', :modular_headers => true
-#  pod 'Firebase/Auth', :modular_headers => true
-#
-#end
