@@ -10,7 +10,6 @@ import UIKit
 import Firebase
 import FaveButton
 import WebKit
-import Parchment
 
 protocol WebTagListViewProtocol: class {
     func reloadData(web_items: [Item])
@@ -19,15 +18,9 @@ protocol WebTagListViewProtocol: class {
 class WebTagListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CellDelegate, WebTagListViewProtocol, UISearchBarDelegate {
     
     var faveButton: FaveButton?
-    //ネイティブアプリ
-    var native_items = [Item]()
-    var native_item: Item?
     //Web系
     var web_items = [Item]()
     var web_item: Item?
-    //雑記
-    var miscellaneous_items = [Item]()
-    var miscellaneous_item: Item?
     var searchItems = [SearchItem]()
     var searchItem: SearchItem?
     var searchTitles: [String] = []
@@ -43,7 +36,6 @@ extension WebTagListViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
         initializeTableView()
         initializePresenter()
         presenter.startDownload()
@@ -80,12 +72,13 @@ extension WebTagListViewController {
     }
     
     func initializeTableView() {
-        
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
         //cellの境界線
         tableView.separatorStyle = .none
         tableView.frame = view.bounds
-        tableView.dataSource = self
+        tableView.backgroundColor = UIColor(hex: "FFEA6A")
         view.addSubview(tableView)
     }
     
@@ -140,9 +133,11 @@ extension WebTagListViewController {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        //CustomCellからのsegue設定
-        performSegue(withIdentifier: "next", sender: web_items[indexPath.row].link)
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let nextVC = sb.instantiateViewController(withIdentifier: "detail") as! DetailViewController
+        nextVC.link = self.web_items[indexPath.row].link
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
     }
         
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -205,20 +200,8 @@ extension WebTagListViewController {
         
     func didUnTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
-        presenter.unFavo(miscellaneous_items[indexPath!].docID)
+        presenter.unFavo(web_items[indexPath!].docID)
         web_items[indexPath!].selected = false
-    }
-            
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let indexPath = self.tableView.indexPathForSelectedRow {
-            let controller = segue.destination as! DetailViewController
-            controller.articleTitle = web_items[indexPath.row].title
-            controller.link = web_items[indexPath.row].link
-            controller.pubDate = web_items[indexPath.row].pubDate
-            controller.selected = web_items[indexPath.row].selected
-            controller.docID = web_items[indexPath.row].docID
-            controller.feedTitle = web_items[indexPath.row].feedTitle
-        }
     }
 }
 

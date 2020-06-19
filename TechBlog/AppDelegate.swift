@@ -21,6 +21,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        // rootViewにしたいViewControllerのインスタンスの生成
+//        let mainPagingViewController: UIViewController = MainPagingViewController()
+//
+//        // ナビゲーションコントローラの生成
+//        let myNavController: UINavigationController = UINavigationController(rootViewController: mainPagingViewController)
+//
+//        // rootViewの設定
+//        self.window?.rootViewController = myNavController
+//
+//        // NavigationControllerを表示
+//        self.window?.makeKeyAndVisible()
         return true
     }
     

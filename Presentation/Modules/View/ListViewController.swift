@@ -9,7 +9,6 @@ import UIKit
 import Firebase
 import FaveButton
 import WebKit
-import Parchment
 
 protocol ListViewProtocol: class {
     func reloadData(with miscellaneous_items: [Item])
@@ -21,12 +20,6 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     var faveButton: FaveButton?
     var items = [Item]()
     var item:Item?
-    //ネイティブアプリ
-    var native_items = [Item]()
-    var native_item: Item?
-    //Web系
-    var web_items = [Item]()
-    var web_item: Item?
     //雑記
     var miscellaneous_items = [Item]()
     var miscellaneous_item: Item?
@@ -80,13 +73,15 @@ extension ListViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-    
+    //.size.height
     func initializeTableView() {
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
         //cellの境界線
         tableView.separatorStyle = .none
         tableView.frame = view.bounds
         tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = UIColor(hex: "FFEA6A")
         view.addSubview(tableView)
     }
     
@@ -135,15 +130,18 @@ extension ListViewController {
             if cell.isSelected == true {
                 cell.backView.backgroundColor = UIColor.blue
             }
+            
             return cell
         }
         return UITableViewCell()
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        //CustomCellからのsegue設定
-        performSegue(withIdentifier: "next", sender: miscellaneous_items[indexPath.row].link)
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let nextVC = sb.instantiateViewController(withIdentifier: "detail") as! DetailViewController
+        nextVC.link = self.miscellaneous_items[indexPath.row].link
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
     }
         
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -208,17 +206,5 @@ extension ListViewController {
         let indexPath = tableView.indexPath(for: cell)?.row
         presenter.unFavo(miscellaneous_items[indexPath!].docID)
         miscellaneous_items[indexPath!].selected = false
-    }
-            
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let indexPath = self.tableView.indexPathForSelectedRow {
-            let controller = segue.destination as! DetailViewController
-            controller.articleTitle = miscellaneous_items[indexPath.row].title
-            controller.link = miscellaneous_items[indexPath.row].link
-            controller.pubDate = miscellaneous_items[indexPath.row].pubDate
-            controller.selected = miscellaneous_items[indexPath.row].selected
-            controller.docID = miscellaneous_items[indexPath.row].docID
-            controller.feedTitle = miscellaneous_items[indexPath.row].feedTitle
-        }
     }
 }

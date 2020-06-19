@@ -12,11 +12,13 @@ import FaveButton
 protocol CellDelegate: AnyObject {
     func didTapButton(cell: CustomCell)
     func didUnTapButton(cell: CustomCell)
+//    func selectedCell(cell: CustomCell)
 }
 //記事一覧ページのCustomCell
 class CustomCell: UITableViewCell, FaveButtonDelegate {
     
     weak var delegate: CellDelegate?
+    var navi: UINavigationController!
     
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
     }
@@ -60,9 +62,9 @@ class CustomCell: UITableViewCell, FaveButtonDelegate {
 
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.delegate?.selectedCell(cell: self)
+//    }
 }
 
 extension FaveButton {

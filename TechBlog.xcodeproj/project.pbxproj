@@ -20,6 +20,7 @@
 		423CDB4E249B368100566398 /* WebTagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CDB4D249B368100566398 /* WebTagListViewController.swift */; };
 		423CDB53249B958800566398 /* WebTagListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CDB52249B958800566398 /* WebTagListPresenter.swift */; };
 		423CDB55249B960D00566398 /* WebTagItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CDB54249B960D00566398 /* WebTagItem.swift */; };
+		423CDB7B249BA67B00566398 /* UIColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423CDB7A249BA67B00566398 /* UIColorHex.swift */; };
 		426F5C9B238D6D10009FEE19 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F5C9A238D6D10009FEE19 /* ItemModel.swift */; };
 		426F5CB123AD8D18009FEE19 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F5CAF23AD8D18009FEE19 /* CustomCell.swift */; };
 		426F5CB223AD8D18009FEE19 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 426F5CB023AD8D18009FEE19 /* CustomCell.xib */; };
@@ -299,6 +300,7 @@
 		423CDB4D249B368100566398 /* WebTagListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebTagListViewController.swift; sourceTree = "<group>"; };
 		423CDB52249B958800566398 /* WebTagListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebTagListPresenter.swift; sourceTree = "<group>"; };
 		423CDB54249B960D00566398 /* WebTagItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebTagItem.swift; sourceTree = "<group>"; };
+		423CDB7A249BA67B00566398 /* UIColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHex.swift; sourceTree = "<group>"; };
 		42607594246F081400837856 /* EngineerBlogRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngineerBlogRelease.entitlements; sourceTree = "<group>"; };
 		42607595246F088400837856 /* EngineerBlog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngineerBlog.entitlements; sourceTree = "<group>"; };
 		426F5C9A238D6D10009FEE19 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
@@ -576,6 +578,7 @@
 				42607594246F081400837856 /* EngineerBlogRelease.entitlements */,
 				06CF189E23F69FB1003DA8A4 /* Assets.xcassets */,
 				42E4A5CF232C5B58009C2B00 /* AppDelegate.swift */,
+				423CDB7A249BA67B00566398 /* UIColorHex.swift */,
 				42AC76122456030400D5F95A /* Favo List */,
 				42AC76132456033A00D5F95A /* Setting */,
 				42AC7614245605AE00D5F95A /* Detail Web */,
@@ -1087,6 +1090,7 @@
 				426F5CB123AD8D18009FEE19 /* CustomCell.swift in Sources */,
 				42AC76412457FE6C00D5F95A /* FavoListPresenter.swift in Sources */,
 				423CDB49249B357600566398 /* MainPagingViewController.swift in Sources */,
+				423CDB7B249BA67B00566398 /* UIColorHex.swift in Sources */,
 				42A351F623E2040F003941A9 /* SettingTableViewController.swift in Sources */,
 				42CF317623CB1E0A00F856B2 /* Favorite.swift in Sources */,
 				422A77EB23BDFD3E005F9DD3 /* FavoListViewController.swift in Sources */,

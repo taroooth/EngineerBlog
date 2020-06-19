@@ -93,6 +93,12 @@ class FavoListViewController: UITableViewController, CellDelegate, FavoListProto
         }
     }
     
+    func selectedCell(cell: CustomCell) {
+        let indexPath = tableView.indexPath(for: cell)?.row
+        let detailViewController = DetailViewController()
+        detailViewController.link = favorites[indexPath!].link
+    }
+    
     func didTapButton(cell: CustomCell) {
         let indexPath = tableView.indexPath(for: cell)?.row
         presenter.favo(favorites[indexPath!].docID,

@@ -22,7 +22,6 @@ class MainPagingViewController: UIViewController {
         // PagingViewController に ViewController を格納
         let pagingViewController = PagingViewController(viewControllers: [firstViewController, secondViewController
         ])
-         
         // View に追加
         self.addChild(pagingViewController)
         self.view.addSubview(pagingViewController.view)
