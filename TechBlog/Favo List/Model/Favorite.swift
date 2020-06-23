@@ -38,15 +38,13 @@ class FavoModel {
         self.db = Firestore.firestore()
     }
 
-    //.order(by: "tapTime.\(user.uid)", descending: true)
-//    .order(by: "selected.\(user.uid)", descending: true)
     func getDocuments() {
+        self.favorites = []
         if let user = Auth.auth().currentUser {
             db.collection("users").document("\(user.uid)").collection("favorites").order(by: "tapTime", descending: true).limit(to: 20).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                self.favorites = []
             for document in querySnapshot!.documents {
                 self.favorite = Favorite()
                 //スナップショットからデータを取り出しfavoritesに格納
@@ -56,6 +54,7 @@ class FavoModel {
                 
                 let timestamp: Timestamp = document.data()["tapTime"] as! Timestamp
                 let dateValue = timestamp.dateValue()
+                self.favorite?.selected = true
                 self.favorite?.tapTime = dateValue
                 self.favorite?.docID = "\(document.documentID)"
                 self.favorites.append(self.favorite!)
@@ -67,8 +66,6 @@ class FavoModel {
         }
     }
     
-   // .order(by: "\(user.uid)", descending: true)
-//    .order(by: "\(user.uid)", descending: true)
     func reGetDocuments() {
         if let user = Auth.auth().currentUser {
         guard let lastSnapshot = last else {return}
@@ -90,9 +87,10 @@ class FavoModel {
                 self.favorite?.link = link
                 self.favorite?.tapTime = dateValue
                 self.favorite?.docID = docID
+                self.favorite?.selected = true
                 self.favorites.append(self.favorite!)
-                }
                 self.delegate?.presentFavos(favorites: self.favorites)
+                }
                 self.last = querySnapshot?.documents.last
                 }
             }
@@ -104,7 +102,7 @@ class FavoModel {
             db.collection("articles").document(documentID).updateData([
             "selected": FieldValue.arrayUnion(["\(user.uid)"])
             ])
-            db.collection("users").document(user.uid).collection("favorites").document().setData([
+            db.collection("users").document(user.uid).collection("favorites").document(documentID).setData([
                 "title": title,
                 "link": link,
                 "feedTitle": feedTitle,
@@ -118,7 +116,13 @@ class FavoModel {
         db.collection("articles").document(documentID).updateData([
             "selected": FieldValue.arrayRemove(["\(user.uid)"])
             ])
-            db.collection("users").document(user.uid).collection("favorites").document(documentID).delete()
+        db.collection("users").document(user.uid).collection("favorites").document(documentID).delete() { err in
+        if let err = err {
+            print("Error removing document: \(err)")
+        } else {
+            print("Document successfully removed!")
+        }
+        }
         }
     }
     

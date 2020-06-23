@@ -17,17 +17,9 @@ protocol WebTagItemDelegate: class {
 class WebTagItemModel {
     
     let db: Firestore
-    var items = [Item]()
-    var item: Item?
-    //ネイティブアプリ
-    var native_items = [Item]()
-    var native_item: Item?
     //Web系
     var web_items = [Item]()
     var web_item: Item?
-    //雑記
-    var miscellaneous_items = [Item]()
-    var miscellaneous_item: Item?
     var last: DocumentSnapshot? = nil
     weak var delegate: WebTagItemDelegate?
     var date = Date()
@@ -67,7 +59,7 @@ class WebTagItemModel {
     func reGetDocuments() {
         if let user = Auth.auth().currentUser {
         guard let lastSnapshot = last else {return}
-        db.collection("articles").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
+        db.collection("articles").whereField("tag", isEqualTo: "Web").order(by: "date", descending: true).limit(to: 20).start(afterDocument: lastSnapshot).getDocuments() { (querySnapshot, err) in
         if let err = err {
             print("Error getting documents: \(err)")
         } else {
@@ -91,7 +83,7 @@ class WebTagItemModel {
                 self.web_item?.docID = docID
                 self.web_item?.feedTitle = feedTitle
                 self.web_items.append(self.web_item!)
-                self.delegate?.rePresentItems(web_items: self.items)
+                self.delegate?.rePresentItems(web_items: self.web_items)
                     }
             self.last = querySnapshot?.documents.last
                 }
@@ -99,14 +91,15 @@ class WebTagItemModel {
         }
     }
     
-    func favo(_ documentID: String, title: String, link: String, feedTitle: String) {
+    func favo(_ documentID: String, title: String, link: String, selected: Bool, feedTitle: String) {
         if let user = Auth.auth().currentUser {
             db.collection("articles").document(documentID).updateData([
                 "selected": FieldValue.arrayUnion(["\(user.uid)"])
             ])
-            db.collection("users").document(user.uid).collection("favorites").document().setData([
+            db.collection("users").document(user.uid).collection("favorites").document(documentID).setData([
                 "title": title,
                 "link": link,
+                "selected": true,
                 "feedTitle": feedTitle,
                 "tapTime": FieldValue.serverTimestamp()
             ])

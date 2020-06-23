@@ -142,13 +142,7 @@ class DetailViewController : UIViewController, FaveButtonDelegate, UIScrollViewD
                 self.db.collection("articles").document(self.docID).updateData([
                     "selected": FieldValue.arrayRemove(["\(user.uid)"])
                 ])
-                self.db.collection("users").document(user.uid).collection("favorites").document(self.docID).delete() { err in
-                if let err = err {
-                    print("Error removing document: \(err)")
-                } else {
-                    print("Document successfully removed!")
-                }
-                }
+                self.db.collection("users").document(user.uid).collection("favorites").document(self.docID).delete()
             })
         }
     }

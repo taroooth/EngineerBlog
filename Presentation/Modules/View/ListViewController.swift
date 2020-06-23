@@ -12,25 +12,17 @@ import WebKit
 
 protocol ListViewProtocol: class {
     func reloadData(with miscellaneous_items: [Item])
-    func stockData(with searchTitles: [String])
 }
 
-class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CellDelegate, ListViewProtocol, UISearchBarDelegate {
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CellDelegate, ListViewProtocol {
     
     var faveButton: FaveButton?
-    var items = [Item]()
-    var item:Item?
     //雑記
     var miscellaneous_items = [Item]()
     var miscellaneous_item: Item?
-    var searchItems = [SearchItem]()
-    var searchItem: SearchItem?
-    var searchTitles: [String] = []
     var presenter: ListPresenterImpl!
     let db = Firestore.firestore()
     var last: DocumentSnapshot? = nil
-    var searchResults:[String] = []
-    var searchBar = UISearchBar()
     private var tableView = UITableView()
 }
 
@@ -41,7 +33,6 @@ extension ListViewController {
         initializeTableView()
         initializePresenter()
         presenter.startDownload()
-        presenter.advanceDownload()
         Auth.auth().signInAnonymously() { (authResult, error) in
             guard let user = authResult?.user else { return }
             let isAnonymous = user.isAnonymous  // true
@@ -57,11 +48,6 @@ extension ListViewController {
     
     func reloadData(with miscellaneous_items: [Item]) {
         self.miscellaneous_items = miscellaneous_items
-        tableView.reloadData()
-    }
-    
-    func stockData(with searchTitles: [String]) {
-        self.searchTitles = searchTitles
         tableView.reloadData()
     }
     
@@ -97,17 +83,6 @@ extension ListViewController {
         return ""
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        searchBar = UISearchBar()
-        searchBar.delegate = self
-        searchBar.searchBarStyle = UISearchBar.Style.default
-        searchBar.showsSearchResultsButton = false
-        searchBar.showsCancelButton = true
-        searchBar.placeholder = "記事を検索"
-        searchBar.tintColor = UIColor.red
-        return searchBar
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
                 if miscellaneous_items[indexPath.row].selected == true {
@@ -115,13 +90,8 @@ extension ListViewController {
             }else {
                 cell.faveButton.setSelected(selected: false, animated: false)
             }
-                
-            if searchBar.text != "" {
-                cell.titleLabel?.text = "\(searchResults[indexPath.row])"
-            } else {
-                cell.titleLabel?.text = miscellaneous_items[indexPath.row].title
-                cell.feedTitleLabel?.text = miscellaneous_items[indexPath.row].feedTitle
-            }
+            cell.titleLabel?.text = miscellaneous_items[indexPath.row].title
+            cell.feedTitleLabel?.text = miscellaneous_items[indexPath.row].feedTitle
             //ラベルの表示行数を無制限にする
             cell.titleLabel?.numberOfLines = 0
             cell.feedTitleLabel?.numberOfLines = 0
@@ -140,6 +110,10 @@ extension ListViewController {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let nextVC = sb.instantiateViewController(withIdentifier: "detail") as! DetailViewController
         nextVC.link = self.miscellaneous_items[indexPath.row].link
+        nextVC.articleTitle = self.miscellaneous_items[indexPath.row].title
+        nextVC.selected = self.miscellaneous_items[indexPath.row].selected
+        nextVC.docID = self.miscellaneous_items[indexPath.row].docID
+        nextVC.feedTitle = self.miscellaneous_items[indexPath.row].feedTitle
         nextVC.modalPresentationStyle = .fullScreen
         self.present(nextVC, animated: true, completion: nil)
     }
@@ -149,36 +123,7 @@ extension ListViewController {
     }
         
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchBar.text != "" {
-            return searchResults.count
-        } else {
-            return miscellaneous_items.count
-        }
-    }
-    
-    // 検索ボタンが押された時に呼ばれる
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.view.endEditing(true)
-        searchBar.showsCancelButton = true
-        self.searchResults = searchTitles.filter{
-            // 大文字と小文字を区別せずに検索
-            $0.lowercased().contains(searchBar.text!.lowercased())
-        }
-        self.tableView.reloadData()
-    }
-    
-    // キャンセルボタンが押された時に呼ばれる
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = false
-        self.view.endEditing(true)
-        searchBar.text = ""
-        self.tableView.reloadData()
-    }
-    
-    // テキストフィールド入力開始前に呼ばれる
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.showsCancelButton = true
-        return true
+        return miscellaneous_items.count
     }
         
     func scrollViewDidEndDragging(_ scrollView: UIScrollView,
@@ -197,6 +142,7 @@ extension ListViewController {
         presenter.favo(miscellaneous_items[indexPath!].docID,
                        title: miscellaneous_items[indexPath!].title,
                        link: miscellaneous_items[indexPath!].link,
+                       selected: miscellaneous_items[indexPath!].selected,
                        feedTitle: miscellaneous_items[indexPath!].feedTitle
                        )
         miscellaneous_items[indexPath!].selected = true

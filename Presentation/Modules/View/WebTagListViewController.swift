@@ -21,14 +21,9 @@ class WebTagListViewController: UIViewController, UITableViewDelegate, UITableVi
     //Web系
     var web_items = [Item]()
     var web_item: Item?
-    var searchItems = [SearchItem]()
-    var searchItem: SearchItem?
-    var searchTitles: [String] = []
     var presenter: WebTagListPresenterImpl!
     let db = Firestore.firestore()
     var last: DocumentSnapshot? = nil
-    var searchResults:[String] = []
-    var searchBar = UISearchBar()
     private var tableView = UITableView()
 }
 
@@ -54,11 +49,6 @@ extension WebTagListViewController {
     
     func reloadData(web_items: [Item]) {
         self.web_items = web_items
-        tableView.reloadData()
-    }
-    
-    func stockData(searchTitles: [String]) {
-        self.searchTitles = searchTitles
         tableView.reloadData()
     }
     
@@ -94,31 +84,15 @@ extension WebTagListViewController {
         return ""
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        searchBar = UISearchBar()
-        searchBar.delegate = self
-        searchBar.searchBarStyle = UISearchBar.Style.default
-        searchBar.showsSearchResultsButton = false
-        searchBar.showsCancelButton = true
-        searchBar.placeholder = "記事を検索"
-        searchBar.tintColor = UIColor.red
-        return searchBar
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell {
-                if web_items[indexPath.row].selected == true {
+            if web_items[indexPath.row].selected == true {
                 cell.faveButton.setSelected(selected: true, animated: false)
             }else {
                 cell.faveButton.setSelected(selected: false, animated: false)
             }
-                
-            if searchBar.text != "" {
-                cell.titleLabel?.text = "\(searchResults[indexPath.row])"
-            } else {
-                cell.titleLabel?.text = web_items[indexPath.row].title
-                cell.feedTitleLabel?.text = web_items[indexPath.row].feedTitle
-            }
+            cell.titleLabel?.text = web_items[indexPath.row].title
+            cell.feedTitleLabel?.text = web_items[indexPath.row].feedTitle
             //ラベルの表示行数を無制限にする
             cell.titleLabel?.numberOfLines = 0
             cell.feedTitleLabel?.numberOfLines = 0
@@ -136,6 +110,10 @@ extension WebTagListViewController {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let nextVC = sb.instantiateViewController(withIdentifier: "detail") as! DetailViewController
         nextVC.link = self.web_items[indexPath.row].link
+        nextVC.articleTitle = self.web_items[indexPath.row].title
+        nextVC.selected = self.web_items[indexPath.row].selected
+        nextVC.docID = self.web_items[indexPath.row].docID
+        nextVC.feedTitle = self.web_items[indexPath.row].feedTitle
         nextVC.modalPresentationStyle = .fullScreen
         self.present(nextVC, animated: true, completion: nil)
     }
@@ -145,36 +123,7 @@ extension WebTagListViewController {
     }
         
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchBar.text != "" {
-            return searchResults.count
-        } else {
             return web_items.count
-        }
-    }
-    
-    // 検索ボタンが押された時に呼ばれる
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.view.endEditing(true)
-        searchBar.showsCancelButton = true
-        self.searchResults = searchTitles.filter{
-            // 大文字と小文字を区別せずに検索
-            $0.lowercased().contains(searchBar.text!.lowercased())
-        }
-        self.tableView.reloadData()
-    }
-    
-    // キャンセルボタンが押された時に呼ばれる
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = false
-        self.view.endEditing(true)
-        searchBar.text = ""
-        self.tableView.reloadData()
-    }
-    
-    // テキストフィールド入力開始前に呼ばれる
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.showsCancelButton = true
-        return true
     }
         
     func scrollViewDidEndDragging(_ scrollView: UIScrollView,
@@ -193,6 +142,7 @@ extension WebTagListViewController {
         presenter.favo(web_items[indexPath!].docID,
                        title: web_items[indexPath!].title,
                        link: web_items[indexPath!].link,
+                       selected: true,
                        feedTitle: web_items[indexPath!].feedTitle
                        )
         web_items[indexPath!].selected = true

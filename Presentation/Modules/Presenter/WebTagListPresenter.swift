@@ -26,11 +26,11 @@ class WebTagListPresenterImpl {
     }
     
     func reStartDownload() {
-//        itemModel.reGetDocuments()
+        webTagItemModel.reGetDocuments()
     }
     
-    func favo(_ documentID: String, title: String, link: String, feedTitle: String) {
-        webTagItemModel.favo(documentID, title: title, link: link, feedTitle: feedTitle)
+    func favo(_ documentID: String, title: String, link: String, selected: Bool, feedTitle: String) {
+        webTagItemModel.favo(documentID, title: title, link: link, selected: selected, feedTitle: feedTitle)
     }
     
     func unFavo(_ documentID: String) {
@@ -48,7 +48,7 @@ extension WebTagListPresenterImpl: WebTagItemDelegate {
     }
     
     func rePresentItems(web_items: [Item]) {
-//        reload(with: items)
+        reload(web_items: web_items)
     }
 }
 
